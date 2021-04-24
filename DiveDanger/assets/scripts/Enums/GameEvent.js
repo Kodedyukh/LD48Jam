@@ -19,6 +19,10 @@ export default cc.Enum({
     ENGINE_BROKEN: 103,
     ENGINE_FIXED: 104,
 
+    //CharacterInWater
+    CHARACTER_MOVE_START: 200,
+    CHARACTER_MOVE_END: 201,
+    
     // system parameters
     SHIELD_DESTROYED: 1001,
     OUT_OF_OXYGEN: 1002,

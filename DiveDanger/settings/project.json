@@ -6,7 +6,9 @@
     "default",
     "player",
     "cargo_borders",
-    "cooperation_area"
+    "cooperation_area",
+    "rope_part",
+    "rope_end"
   ],
   "collision-matrix": [
     [
@@ -21,11 +23,29 @@
     [
       false,
       true,
-      false
+      false,
+      null,
+      true,
+      true
     ],
     [
       false,
       true,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      true,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      true,
+      false,
       false,
       false
     ]
