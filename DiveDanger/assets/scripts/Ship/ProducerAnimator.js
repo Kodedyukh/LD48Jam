@@ -64,12 +64,14 @@ cc.Class({
 		this._animation && this._animation.play(this.fixAnimationName);
 	},
 
-	toggleRepair(isOn) {
-		if (isOn && !this._isRepair) {
-			this._isRepair = true;
-		} else if (!isOn && this._isRepair) {
-			this._isRepair = false;
-		}
+	startRepair() {
+		cc.log('start repair');
+		this._isRepair = true;
+	},
+
+	stopRepair() {
+		cc.log('stop repair');
+		this._isRepair = false;
 	}
 
 	// private methods

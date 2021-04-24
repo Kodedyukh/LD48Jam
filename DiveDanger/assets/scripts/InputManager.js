@@ -8,7 +8,13 @@ cc.Class({
         downButton: '',
         leftButton: '',
         rightButton: '',
-        useButton: ''
+        useButton: '',
+
+        _topButtonPressed: false,
+        _downButtonPressed: false,
+        _leftButtonPressed: false,
+        _rightButtonPressed: false,
+        _useButtonPressed: false
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -27,19 +33,39 @@ cc.Class({
     onKeyDown: function (event) {
         switch(event.keyCode) {
             case cc.macro.KEY[this.topButton]:
-                cc.systemEvent.emit(GameEvent.UP_BUTTON_PRESSED);
+                if (!this._topButtonPressed) {
+                    cc.systemEvent.emit(GameEvent.UP_BUTTON_PRESSED);
+                    this._topButtonPressed = true;
+                }
+                
                 break;
             case cc.macro.KEY[this.downButton]:
-                cc.systemEvent.emit(GameEvent.DOWN_BUTTON_PRESSED);
+                if (!this._downButtonPressed) {
+                    cc.systemEvent.emit(GameEvent.DOWN_BUTTON_PRESSED);
+                    this._downButtonPressed = true;
+                }
+                
                 break;
             case cc.macro.KEY[this.leftButton]:
-                cc.systemEvent.emit(GameEvent.LEFT_BUTTON_PRESSED);
+                if (!this._leftButtonPressed) {
+                    cc.systemEvent.emit(GameEvent.LEFT_BUTTON_PRESSED);
+                    this._leftButtonPressed = true;
+                }
+                
                 break;
             case cc.macro.KEY[this.rightButton]:
-                cc.systemEvent.emit(GameEvent.RIGHT_BUTTON_PRESSED);
+                if (!this._rightButtonPressed) {
+                    cc.systemEvent.emit(GameEvent.RIGHT_BUTTON_PRESSED);
+                    this._rightButtonPressed = true;
+                }
+                
                 break;
             case cc.macro.KEY[this.useButton]:
-                cc.systemEvent.emit(GameEvent.USE_BUTTON_PRESSED);
+                if (!this._useButtonPressed) {
+                    cc.systemEvent.emit(GameEvent.USE_BUTTON_PRESSED);
+                    this._useButtonPressed = true;
+                }
+                
                 break;
         }
     },
@@ -48,18 +74,33 @@ cc.Class({
         switch(event.keyCode) {
             case cc.macro.KEY[this.topButton]:
                 cc.systemEvent.emit(GameEvent.UP_BUTTON_RELEASED);
+                if (this._topButtonPressed) {
+                    this._topButtonPressed = false;
+                }
                 break;
             case cc.macro.KEY[this.downButton]:
                 cc.systemEvent.emit(GameEvent.DOWN_BUTTON_RELEASED);
+                if (this._downButtonPressed) {
+                    this._downButtonPressed = false;
+                }
                 break;
             case cc.macro.KEY[this.leftButton]:
                 cc.systemEvent.emit(GameEvent.LEFT_BUTTON_RELEASED);
+                if (this._leftButtonPressed) {
+                    this._leftButtonPressed = false;
+                }
                 break;
             case cc.macro.KEY[this.rightButton]:
                 cc.systemEvent.emit(GameEvent.RIGHT_BUTTON_RELEASED);
+                if (this._rightButtonPressed) {
+                    this._rightButtonPressed = false;
+                }
                 break;
             case cc.macro.KEY[this.useButton]:
                 cc.systemEvent.emit(GameEvent.USE_BUTTON_RELEASED);
+                if (this._useButtonPressed) {
+                    this._useButtonPressed = false;
+                }
                 break;
         }
     }

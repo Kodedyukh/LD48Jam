@@ -73,7 +73,7 @@ const ParameterProducer = cc.Class({
 			default: true,
 			notify() {
 				if (this.isActive) {
-					this.ship.launchProduction(this.param)
+					this.ship.startProduction(this.param)
 				} else {
 					this.ship.stopProduction(this.param)
 				}
@@ -108,7 +108,7 @@ const ParameterProducer = cc.Class({
 	init(ship, param, producerAnimator) {
 		this.ship = ship;
 		this.param = param;
-		this.producerAnimator = producerAnimator;
+		this.setProducerAnimator(producerAnimator);
 
 		this.launchTimer();
 	},
