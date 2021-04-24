@@ -73,9 +73,9 @@ const ParameterProducer = cc.Class({
 			default: true,
 			notify() {
 				if (this.isActive) {
-					this.ship.launchProduction(this.parameter)
+					this.ship.launchProduction(this.param)
 				} else {
-					this.ship.stopProduction(this.parameter)
+					this.ship.stopProduction(this.param)
 				}
 			}
 		},
@@ -89,11 +89,7 @@ const ParameterProducer = cc.Class({
 		},
 
 		maxTimeToBreak: {
-			default: 80
-		},
-
-		scheduleMethod: {
-			default: null
+			default: 10
 		},
 
 		producerAnimator: {
@@ -112,7 +108,6 @@ const ParameterProducer = cc.Class({
 	init(ship, param, producerAnimator) {
 		this.ship = ship;
 		this.param = param;
-		this.scheduleMethod = this.ship.scheduleOnce;
 		this.producerAnimator = producerAnimator;
 
 		this.launchTimer();
@@ -125,10 +120,12 @@ const ParameterProducer = cc.Class({
 
 	launchTimer() {
 		const timeToBreak = Math.pow((Math.random() + Math.random() + Math.random() +
-			Maht.random() + Math.random() + Math.random()) / 6, 0.5) * 
+			Math.random() + Math.random() + Math.random()) / 6, 0.5) * 
 			this.maxTimeToBreak;
 
-		this.scheduleMethod(() => {
+		cc.log('time to break', timeToBreak);
+
+		this.ship.postponeCall(() => {
 			this.break();
 		}, timeToBreak);
 	},
@@ -200,6 +197,11 @@ cc.Class({
 			type: cc.Node
 		},
 
+		interactionAreas: {
+			default: [],
+			type: cc.Node
+		},
+
 		//public
 		oxygen: {
 			default: null,
@@ -229,7 +231,7 @@ cc.Class({
 		armsProducer: {
 			default: null,
 			visible: false
-		}
+		},
 
 		//private
 	},
@@ -260,7 +262,7 @@ cc.Class({
 		this.rollAngle.minValue = -1000000;
 		this.rollAngle.maxValue = 1000000;
 		this.rollAngle.inflow = this.rollAngleSpeed;
-		this.rollAngleSpeed.outflow = this.rollAngleSpeed;
+		this.rollAngle.outflow = this.rollAngleSpeed;
 
 		// set producers
 		this.oxygenProducer = new ParameterProducer();
@@ -294,7 +296,10 @@ cc.Class({
 
 
 		this.rollAngle.update(dt);
-		this.node.angle = this.rollAngle;
+		this.node.angle = this.rollAngle.value;
+		this.interactionAreas.forEach((area) => {
+			area.angle = 0;
+		}, this);
 
 	},
 
@@ -313,6 +318,10 @@ cc.Class({
 
 	stopProduction(param) {
 		param.inflow = 0;
+	},
+
+	postponeCall(call, time) {
+		this.scheduleOnce(call, time);
 	},
 
 	// private methods
@@ -336,8 +345,10 @@ cc.Class({
 	},
 
 	onEngineBroken(engineType) {
+		cc.log('have engine broken');
 		switch (engineType) {
 			case EngineType.Left:
+				cc.log('left is broken');
 				this.rollAngle.inflow = 0;
 				break;
 

@@ -28,13 +28,24 @@ cc.Class({
 		_animation: {
 			default: null,
 			serializable: false
+		},
+
+		_sprite: {
+			default: null,
+			serializable: false
+		},
+
+		_alarmTween: {
+			default: null,
+			serializable: false
 		}
 	},
 
 	// LIFE-CYCLE CALLBACKS:
 
 	onEnable() {
-
+		this._sprite = this.getComponentInChildren(cc.Sprite);
+		this._animation = this.getComponent(cc.Animation);
 	},
 
 	update (dt) {
@@ -45,11 +56,12 @@ cc.Class({
 
 	// public methods
 	break() {
-		this._animation.play(this.brokenAnimationName);
+		cc.log('break in producer animator')
+		this._animation && this._animation.play(this.brokenAnimationName);
 	},
 
 	fix() {
-		this._animation.play(this.fixAnimationName);
+		this._animation && this._animation.play(this.fixAnimationName);
 	},
 
 	toggleRepair(isOn) {
