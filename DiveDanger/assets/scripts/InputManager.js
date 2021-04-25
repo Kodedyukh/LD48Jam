@@ -94,7 +94,7 @@ cc.Class({
                 cc.systemEvent.emit(GameEvent.UP_BUTTON_RELEASED);
                 
                 if (this._isPressTopButton) {
-                    cc.systemEvent.emit(GameEvent.CHARACTER_MOVE_START, cc.v2(0, 1));
+                    cc.systemEvent.emit(GameEvent.CHARACTER_MOVE_END, cc.v2(0, 1));
                     this._isPressTopButton = false;
                 }
                 break;
@@ -103,7 +103,7 @@ cc.Class({
                 cc.systemEvent.emit(GameEvent.DOWN_BUTTON_RELEASED);
 
                 if (this._isPressDownButton) {
-                    cc.systemEvent.emit(GameEvent.CHARACTER_MOVE_START, cc.v2(0, -1));
+                    cc.systemEvent.emit(GameEvent.CHARACTER_MOVE_END, cc.v2(0, -1));
                     this._isPressDownButton = false;
                 }
                 break;
@@ -112,7 +112,7 @@ cc.Class({
                 cc.systemEvent.emit(GameEvent.LEFT_BUTTON_RELEASED);
                 
                 if (this._isPressLeftButton) {
-                    cc.systemEvent.emit(GameEvent.CHARACTER_MOVE_START, cc.v2(-1, 0));
+                    cc.systemEvent.emit(GameEvent.CHARACTER_MOVE_END, cc.v2(-1, 0));
                     this._isPressLeftButton = false;
                 }
                 break;
@@ -121,7 +121,7 @@ cc.Class({
                 cc.systemEvent.emit(GameEvent.RIGHT_BUTTON_RELEASED);
 
                 if (this._isPressRightButton) {
-                    cc.systemEvent.emit(GameEvent.CHARACTER_MOVE_START, cc.v2(1, 0));
+                    cc.systemEvent.emit(GameEvent.CHARACTER_MOVE_END, cc.v2(1, 0));
                     this._isPressRightButton = false;
                 }
                 break;

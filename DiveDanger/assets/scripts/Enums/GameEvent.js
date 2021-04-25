@@ -22,6 +22,9 @@ export default cc.Enum({
     //CharacterInWater
     CHARACTER_MOVE_START: 200,
     CHARACTER_MOVE_END: 201,
+
+    //Rope
+    ROPE_TOGGLE: 300,
     
     // system parameters
     SHIELD_DESTROYED: 1001,

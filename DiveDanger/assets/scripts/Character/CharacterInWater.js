@@ -12,6 +12,12 @@ cc.Class({
         _body: {
             default: null,
             serializable: false
+        },
+
+        _isActiveCharacter: {
+            default: false,
+            serializable: false,
+            visible: false
         }
     },
 
@@ -32,25 +38,35 @@ cc.Class({
         cc.systemEvent[func](GameEvent.CHARACTER_MOVE_END, this.onCharacterMoveEnd, this);
     },
 
+    toggleActiveCharacter(isOn) {
+        this._isActiveCharacter = isOn;
+        this._body.linearVelocity = cc.v2(0, 0);
+    },
+
     onCharacterMoveStart(direction) {
         // const x = this._body.linearVelocity.x + direction.x * this.velocity;
         // const y = this._body.linearVelocity.y + direction.y * this.velocity;
 
-        const x = direction.x ? direction.x * this.velocity : this._body.linearVelocity.x;
-        const y = direction.y ? direction.y * this.velocity : this._body.linearVelocity.y;
-
-        const velocity = cc.v2(x, y);
-        this._body.linearVelocity = velocity;
+        if(this._isActiveCharacter) {
+            const x = direction.x ? direction.x * this.velocity : this._body.linearVelocity.x;
+            const y = direction.y ? direction.y * this.velocity : this._body.linearVelocity.y;
+    
+            const velocity = cc.v2(x, y);
+            this._body.linearVelocity = velocity;
+        }
     },
 
     onCharacterMoveEnd(direction) {
         // const x = this._body.linearVelocity.x - direction.x * this.velocity;
         // const y = this._body.linearVelocity.y - direction.y * this.velocity;
 
-        const x = direction.x && (direction.x * this.velocity === this._body.linearVelocity.x) ? 0 : this._body.linearVelocity.x;
-        const y = direction.y && (direction.y * this.velocity === this._body.linearVelocity.y) ? 0 : this._body.linearVelocity.y;
+        if (this._isActiveCharacter) {
+            const x = direction.x && (direction.x * this.velocity === this._body.linearVelocity.x) ? 0 : this._body.linearVelocity.x;
+            const y = direction.y && (direction.y * this.velocity === this._body.linearVelocity.y) ? 0 : this._body.linearVelocity.y;
+    
+            const velocity = cc.v2(x, y);
+            this._body.linearVelocity = velocity;
+        }
 
-        const velocity = cc.v2(x, y);
-        this._body.linearVelocity = velocity;
     },
 });

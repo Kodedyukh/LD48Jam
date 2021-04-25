@@ -65,17 +65,17 @@ cc.Class({
         end.parent = this.node;
         end.setPosition(cc.v2(0, 0));
 
-        this._parts.push(start);
+        this._parts.push(end);
 
         const joint = this._parts[this._parts.length - 2].getComponent(cc.Joint);
         const rigidBody = end.getComponent(cc.RigidBody);
         joint.connectedBody = rigidBody;
         joint.apply();
 
-        const jointEnd = end.getComponent(cc.Joint);
-        const rigidBodyForEndRope = this.connectionEndRope.getComponent(cc.RigidBody);
-        jointEnd.connectedBody = rigidBodyForEndRope;
-        jointEnd.apply();
+        // const jointEnd = end.getComponent(cc.Joint);
+        // const rigidBodyForEndRope = this.connectionEndRope.getComponent(cc.RigidBody);
+        // jointEnd.connectedBody = rigidBodyForEndRope;
+        // jointEnd.apply();
 
     },
 });
