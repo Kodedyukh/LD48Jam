@@ -16,8 +16,7 @@ export default cc.Enum({
 
     SHIELD_DAMAGED: 101,
     SHOOT: 102,
-    ENGINE_BROKEN: 103,
-    ENGINE_FIXED: 104,
+    ENGINE_TOGGLE: 103,
 
     // system parameters
     SHIELD_DESTROYED: 1001,

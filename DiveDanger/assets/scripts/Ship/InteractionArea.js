@@ -32,6 +32,7 @@ cc.Class({
 
     // public methods
     startInteraction() {
+        cc.log('start interaction');
         this.startInteractionCall && this.startInteractionCall();
     },
 

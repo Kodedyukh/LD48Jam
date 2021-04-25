@@ -234,6 +234,11 @@ cc.Class({
 		},
 
 		//private
+
+		_engineWork: {
+			default: {},
+			serializable: false
+		}
 	},
 
 	// LIFE-CYCLE CALLBACKS:
@@ -261,8 +266,8 @@ cc.Class({
 		this.rollAngle.value = 0;
 		this.rollAngle.minValue = -1000000;
 		this.rollAngle.maxValue = 1000000;
-		this.rollAngle.inflow = this.rollAngleSpeed;
-		this.rollAngle.outflow = this.rollAngleSpeed;
+		this.rollAngle.inflow = 3 * this.rollAngleSpeed;
+		this.rollAngle.outflow = 3 * this.rollAngleSpeed;
 
 		// set producers
 		this.oxygenProducer = new ParameterProducer();
@@ -272,6 +277,11 @@ cc.Class({
 		this.armsProducer = new ParameterProducer();
 		this.armsProducer.init(this, this.arms,
 			this.armsGeneratorNode.getComponent(ProducerAnimator));
+
+		// set engine conditions
+		Object.keys(EngineType).forEach((engType) => {
+			this._engineWork[engType] = true;
+		}, this);
 
 		this._handleSubscription(true);
 
@@ -330,8 +340,7 @@ cc.Class({
 
 		cc.systemEvent[func](GameEvent.SHIELD_DAMAGED, this.onShieldDamaged, this);
 		cc.systemEvent[func](GameEvent.SHOOT, this.onShoot, this);
-		cc.systemEvent[func](GameEvent.ENGINE_BROKEN, this.onEngineBroken, this);
-		cc.systemEvent[func](GameEvent.ENGINE_FIXED, this.onEngineFixed, this);
+		cc.systemEvent[func](GameEvent.ENGINE_TOGGLE, this.onEngineToggle, this);
 	},
 
 	// callbacks
@@ -344,29 +353,22 @@ cc.Class({
 		this.arms.drop = this.armsConsumption;
 	},
 
-	onEngineBroken(engineType) {
-		cc.log('have engine broken');
-		switch (engineType) {
-			case EngineType.Left:
-				cc.log('left is broken');
-				this.rollAngle.inflow = 0;
-				break;
+	onEngineToggle(isOn, engineTypeStr) {
+		cc.log('have engine toggle', isOn, engineTypeStr);
+		const engineType = Number(engineTypeStr);
 
-			case EngineType.Right:
-				this.rollAngle.outflow = 0;
-				break;
+		if (this._engineWork[engineType] != isOn) {
+			this._engineWork[engineType] = isOn;
+
+			const side = engineType < 4? 'inflow': 'outflow';
+
+			if (isOn) {
+				this.rollAngle[side] += this.rollAngleSpeed;	
+			} else {
+				this.rollAngle[side] -= this.rollAngleSpeed;
+			}
 		}
+
+		
 	},
-
-	onEngineFixed(engineType) {
-		switch (engineType) {
-			case EngineType.Left:
-				this.rollAngle.inflow = this.rollAngleSpeed;
-				break;
-
-			case EngineType.Right:
-				this.rollAngle.outflow = this.rollAngleSpeed;
-				break;
-		}
-	}
 });

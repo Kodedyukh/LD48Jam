@@ -1,4 +1,8 @@
 export default cc.Enum({
-    Right: 1,
-    Left: 2
+    LeftBottom: 1,
+    LeftMiddle: 2,
+    LeftTop: 3,
+    RightBottom: 4,
+    RightMiddle: 5,
+    RightTop: 6
 })
