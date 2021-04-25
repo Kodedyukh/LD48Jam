@@ -11,7 +11,9 @@
     "enemy_bullet",
     "enemy",
     "rope_part",
-    "rope_end"
+    "rope_end",
+    "test",
+    "player_bullet"
   ],
   "collision-matrix": [
     [
@@ -61,12 +63,39 @@
       false,
       false,
       false,
-      false
+      false,
+      null,
+      null,
+      false,
+      true
     ],
     [
       false,
       false,
       true,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
       false,
       false,
       false

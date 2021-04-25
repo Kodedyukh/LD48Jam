@@ -22,6 +22,10 @@ cc.Class({
     onLoad () {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+
+        this.node.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
+        this.node.on(cc.Node.EventType.MOUSE_MOVE, this.onMouseMove, this);
+        this.node.on(cc.Node.EventType.MOUSE_UP, this.onMouseUp, this);
     },
 
     start () {
@@ -131,5 +135,15 @@ cc.Class({
                 }
                 break;
         }
-    }
+    },
+
+    onMouseDown(event) {
+        cc.systemEvent.emit(GameEvent.MOUSE_DOWN, cc.v2(event._x, event._y));
+    },
+    onMouseMove(event) {
+        cc.systemEvent.emit(GameEvent.MOUSE_MOVE, cc.v2(event._x, event._y));
+    },
+    onMouseUp(event) {
+        cc.systemEvent.emit(GameEvent.MOUSE_UP, cc.v2(event._x, event._y));
+    },
 });

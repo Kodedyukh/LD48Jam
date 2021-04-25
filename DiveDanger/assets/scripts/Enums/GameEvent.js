@@ -12,6 +12,10 @@ export default cc.Enum({
     USE_BUTTON_PRESSED: 9,
     USE_BUTTON_RELEASED: 10,
 
+    MOUSE_DOWN: 21,
+    MOUSE_MOVE: 22,
+    MOUSE_UP: 23,
+
     SET_SUBMARINE_ROTATION: 100,
 
     SHIELD_DAMAGED: 101,
