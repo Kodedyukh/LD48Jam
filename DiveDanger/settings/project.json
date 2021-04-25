@@ -9,7 +9,9 @@
     "interaction_area",
     "engines",
     "enemy_bullet",
-    "enemy"
+    "enemy",
+    "rope_part",
+    "rope_end"
   ],
   "collision-matrix": [
     [
@@ -27,6 +29,7 @@
       false,
       null,
       null,
+      true,
       true
     ],
     [
@@ -56,6 +59,14 @@
       false,
       false,
       false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      true,
       false,
       false,
       false
