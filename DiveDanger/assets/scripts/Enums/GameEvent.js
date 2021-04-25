@@ -22,4 +22,7 @@ export default cc.Enum({
     SHIELD_DESTROYED: 1001,
     OUT_OF_OXYGEN: 1002,
     OUT_OF_ARMS: 1003,
+
+    GET_TARGET_ENGINES: 1100,
+    ENGINE_DAMAGED: 1101
 });

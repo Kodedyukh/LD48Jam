@@ -6,7 +6,10 @@
     "default",
     "player",
     "cargo_borders",
-    "interaction_area"
+    "interaction_area",
+    "engines",
+    "enemy_bullet",
+    "enemy"
   ],
   "collision-matrix": [
     [
@@ -21,11 +24,39 @@
     [
       false,
       true,
-      false
+      false,
+      null,
+      null,
+      true
     ],
     [
       false,
       true,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ],
+    [
+      false,
+      false,
+      true,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
       false,
       false
     ]
