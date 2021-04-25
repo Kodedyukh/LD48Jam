@@ -26,7 +26,7 @@
         "__id__": 11
       },
       {
-        "__id__": 112
+        "__id__": 113
       }
     ],
     "_active": false,
@@ -3335,8 +3335,8 @@
         0,
         0,
         0,
-        -1,
-        6.123233995736766e-17,
+        0,
+        1,
         1,
         1,
         1
@@ -3346,7 +3346,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": -180
+      "z": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -3721,7 +3721,7 @@
       },
       {
         "__type__": "cc.Vec2",
-        "x": 387,
+        "x": 395,
         "y": -71
       },
       {
@@ -3761,7 +3761,7 @@
       },
       {
         "__type__": "cc.Vec2",
-        "x": 228,
+        "x": 236,
         "y": -135
       },
       {
@@ -3866,7 +3866,7 @@
       },
       {
         "__type__": "cc.Vec2",
-        "x": 189,
+        "x": 181,
         "y": -135
       },
       {
@@ -3886,7 +3886,7 @@
       },
       {
         "__type__": "cc.Vec2",
-        "x": 93,
+        "x": 85,
         "y": -71
       },
       {
@@ -4000,7 +4000,7 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.2,
+    "_friction": 0,
     "_restitution": 0,
     "body": null,
     "_offset": {
@@ -4041,7 +4041,7 @@
       },
       {
         "__type__": "cc.Vec2",
-        "x": 188,
+        "x": 180,
         "y": -39
       },
       {
@@ -4066,7 +4066,7 @@
       },
       {
         "__type__": "cc.Vec2",
-        "x": -28,
+        "x": -20,
         "y": -39
       }
     ],
@@ -4106,6 +4106,9 @@
       },
       {
         "__id__": 111
+      },
+      {
+        "__id__": 112
       }
     ],
     "_prefab": null,
@@ -4352,8 +4355,9 @@
       "__id__": 100
     },
     "_enabled": true,
-    "runVelocity": 200,
-    "jumpVelocity": 400,
+    "runVelocity": 150,
+    "jumpVelocity": 550,
+    "jumpCoolDown": 0.3,
     "useDuration": 3,
     "interactionMark": {
       "__id__": 103
@@ -4393,7 +4397,7 @@
     "_enabled": true,
     "_type": 2,
     "_allowSleep": false,
-    "_gravityScale": 3,
+    "_gravityScale": 4,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -4441,7 +4445,7 @@
     "node": {
       "__id__": 100
     },
-    "_enabled": true,
+    "_enabled": false,
     "tag": 0,
     "_density": 1,
     "_sensor": true,
@@ -4485,6 +4489,28 @@
       "height": 10
     },
     "_id": "78TbcxQnVAM50iebPuveW1"
+  },
+  {
+    "__type__": "cc.PhysicsCircleCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 100
+    },
+    "_enabled": true,
+    "tag": 0,
+    "_density": 1,
+    "_sensor": true,
+    "_friction": 0.2,
+    "_restitution": 0,
+    "body": null,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": -14
+    },
+    "_radius": 7,
+    "_id": "dc4CD5OtBJBJBSO5RpcXwc"
   },
   {
     "__type__": "cc.Node",

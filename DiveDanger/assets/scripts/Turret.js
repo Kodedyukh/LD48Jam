@@ -48,6 +48,14 @@ cc.Class({
         return (v2.y <= 0 ? 1 : -1) * Math.acos((v1.x * v2.x + v1.y * v2.y) / (Math.hypot(v1.x,v1.y) * Math.hypot(v2.x, v2.y))) * 180 / Math.PI;
     },
 
+    _getSummaryAngle(node, startAngle = 0) {
+        let angle = startAngle + node.angle;
+        if (node.parent) {
+            angle = this._getSummaryAngle(node.parent, angle);
+        }
+        return angle;
+    },
+
     _shoot() {
         if (this._isActive) {
             this._createMissile();
@@ -60,7 +68,7 @@ cc.Class({
 
         const muzzlePosition = this.node.convertToWorldSpaceAR(this.muzzleNode);
         const muzzleWidth = this.muzzleNode.width;
-        const muzzleAngle = this.muzzleNode.angle / 180 * Math.PI;
+        const muzzleAngle = this._getSummaryAngle(this.muzzleNode, 0)/*this.muzzleNode.angle*/ / 180 * Math.PI;
         const muzzleOffset = cc.v2(muzzleWidth * Math.cos(muzzleAngle), muzzleWidth * Math.sin(muzzleAngle));
         const firePosition = muzzlePosition.sub(muzzleOffset);
 

@@ -17,6 +17,7 @@ cc.Class({
 	properties: {
 		runVelocity: 100,
 		jumpVelocity: 100,
+        jumpCoolDown: 2,
 		useDuration: 3,
 		interactionMark: {
 			default: null,
@@ -26,8 +27,9 @@ cc.Class({
 		inputs: { default() { return new PlayerInputsHelper() }, type: PlayerInputsHelper, visible: false },
 
 		_body: { default: null, serializable: false },
-		_interactionArea: { default: null, serializable: false },
+		_interactionAreas: { default: [], serializable: false },
 		_isJumping: { default: false, serializable: false },
+		_jumpTimeout: { default: 0, serializable: false },
 		_useDuration: { default: 0, serializable: false }
 	},
 
@@ -45,11 +47,16 @@ cc.Class({
 	update (dt) {
 		const velocity = cc.v2(0, this._body.linearVelocity.y);
 		if (this.inputs.left) velocity.x -= this.runVelocity;
-		if (this.inputs.right) velocity.x += this.runVelocity;
-		if (this.inputs.top && !this._isJumping) {
+		if (this.inputs.right) velocity.x += this.runVelocity * (this._isJumping ? 1.5 : 1);
+		if (this.inputs.top && !this._isJumping && this._jumpTimeout >= this.jumpCoolDown) {
 			this._isJumping = true;
+            this._jumpTimeout = 0;
 			velocity.y += this.jumpVelocity;
 		}
+
+        if (this._jumpTimeout < this.jumpCoolDown) {
+            this._jumpTimeout += dt;
+        }
 
 		/*if (this.inputs.use) {
 			this._useDuration += dt;
@@ -102,15 +109,15 @@ cc.Class({
 	onUseButtonPressed() {
 		this.inputs.use = true;
 
-		if (this._interactionArea) {
-			this._interactionArea.startInteraction();
+		if (this._interactionAreas.length) {
+			this._interactionAreas[0].startInteraction();
 		}
 	},
 	onUseButtonReleased() {
 		this.inputs.use = false;
 
-		if (this._interactionArea) {
-			this._interactionArea.stopInteraction();
+		if (this._interactionAreas.length) {
+			this._interactionAreas[0].stopInteraction();
 		}
 	},
 
@@ -125,9 +132,12 @@ cc.Class({
 				cc.log('begin contact with interaction area');
 				if (self.tag === 1) {
 					cc.log('enter interaction area');
-					this._interactionArea = other.node.getComponent(InteractionArea);
+                    const interactionArea = other.node.getComponent(InteractionArea);
+                    if (interactionArea) {
+					    this._interactionAreas.push(interactionArea);
+                    }
 
-					if (this._interactionArea) {
+					if (this._interactionAreas.length) {
 						this.interactionMark.opacity = 255;
 					}
 				}
@@ -142,15 +152,16 @@ cc.Class({
 			case 'interaction_area': {
 				if (self.tag === 1) {
 					cc.log('leave interaction area');
-					if (this._interactionArea) {
-						this._interactionArea.stopInteraction();
+                    const interactionArea = other.node.getComponent(InteractionArea);
+					if (interactionArea) {
+						interactionArea.stopInteraction();
 					}
 
-					if (this.interactionMark.opacity > 0) {
+					this._interactionAreas = this._interactionAreas.filter(a => a !== interactionArea);
+
+					if (this._interactionAreas.length === 0) {
 						this.interactionMark.opacity = 0;
 					}
-
-					this._interactionArea = null;
 				}
 			} break;
 		}
