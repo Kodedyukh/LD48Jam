@@ -2,6 +2,7 @@ import GameEvent from 'GameEvent';
 
 import EngineType from 'EngineType';
 import ProducerAnimator from 'ProducerAnimator';
+import RopeType from 'RopeType';
 
 // helpers
 const SystemParam = cc.Class({

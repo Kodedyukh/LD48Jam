@@ -23,12 +23,14 @@ cc.Class({
 			type: cc.Node
 		},
 
+
 		inputs: { default() { return new PlayerInputsHelper() }, type: PlayerInputsHelper, visible: false },
 
 		_body: { default: null, serializable: false },
 		_interactionArea: { default: null, serializable: false },
 		_isJumping: { default: false, serializable: false },
-		_useDuration: { default: 0, serializable: false }
+		_useDuration: { default: 0, serializable: false },
+		_isPinned: {default: false, serializable: false}
 	},
 
 	// LIFE-CYCLE CALLBACKS:
@@ -78,25 +80,40 @@ cc.Class({
 
 		cc.systemEvent[func](GameEvent.USE_BUTTON_PRESSED, this.onUseButtonPressed, this);
 		cc.systemEvent[func](GameEvent.USE_BUTTON_RELEASED, this.onUseButtonReleased, this);
+
+		cc.systemEvent[func](GameEvent.ROPE_TOGGLE, this.onRopeToggle, this);
 	},
 
 	onLeftButtonPressed() {
-		this.inputs.left = true;
+		if (!this._isPinned){
+			this.inputs.left = true;	
+		}
+		
 	},
 	onLeftButtonReleased() {
-		this.inputs.left = false;
+		if (!this._isPinned){
+			this.inputs.left = false;
+		}
 	},
 	onRightButtonPressed() {
-		this.inputs.right = true;
+		if (!this._isPinned){
+			this.inputs.right = true;
+		}
 	},
 	onRightButtonReleased() {
-		this.inputs.right = false;
+		if (!this._isPinned){
+			this.inputs.right = false;
+		}
 	},
 	onUpButtonPressed() {
-		this.inputs.top = true;
+		if (!this._isPinned){
+			this.inputs.top = true;
+		}
 	},
 	onUpButtonReleased() {
-		this.inputs.top = false;
+		if (!this._isPinned){
+			this.inputs.top = false;
+		}
 	},
 
 	onUseButtonPressed() {
@@ -114,6 +131,21 @@ cc.Class({
 		}
 	},
 
+	onRopeToggle(isOn) {
+		if (!this._isPinned && isOn) {
+			this.inputs.left = false;
+			this.inputs.right = false;
+			this.inputs.top = false;
+
+			this._isPinned = true;
+			cc.systemEvent.emit(GameEvent.PIN_PLAYER, true);
+		} else if (this._isPinned && !isOn) {
+			this._isPinned = false;
+			//cc.log('emitting uooin');
+			cc.systemEvent.emit(GameEvent.PIN_PLAYER, false);
+		}
+	},
+
 	onBeginContact(contact, self, other) {
 		const otherGroupName = other.node.group;
 		switch(otherGroupName){
@@ -122,9 +154,9 @@ cc.Class({
 					this._isJumping = false;
 			} break;
 			case 'interaction_area': {
-				cc.log('begin contact with interaction area');
+				//cc.log('begin contact with interaction area');
 				if (self.tag === 1) {
-					cc.log('enter interaction area');
+					//cc.log('enter interaction area');
 					this._interactionArea = other.node.getComponent(InteractionArea);
 
 					if (this._interactionArea) {
@@ -141,7 +173,7 @@ cc.Class({
 		switch(otherGroupName){
 			case 'interaction_area': {
 				if (self.tag === 1) {
-					cc.log('leave interaction area');
+					//cc.log('leave interaction area');
 					if (this._interactionArea) {
 						this._interactionArea.stopInteraction();
 					}

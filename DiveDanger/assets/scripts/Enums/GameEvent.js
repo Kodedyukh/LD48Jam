@@ -24,6 +24,9 @@ export default cc.Enum({
 
     //Rope
     ROPE_TOGGLE: 300,
+
+    //Diver
+    DIVER_ENTER: 400,
     
     // system parameters
     SHIELD_DESTROYED: 1001,

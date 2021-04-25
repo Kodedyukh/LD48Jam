@@ -36,7 +36,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-        this._ropeConstruct();
+        //this._ropeConstruct();
     },
 
     _ropeConstruct() {
@@ -78,4 +78,12 @@ cc.Class({
         // jointEnd.apply();
 
     },
+
+    _destroyRope() {
+        for (let i = 0; i < this.lengthRope; i++) {
+            this._parts[i].destroy();
+        }
+
+        this._parts = [];
+    }
 });

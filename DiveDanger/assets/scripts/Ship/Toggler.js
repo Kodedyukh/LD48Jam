@@ -39,9 +39,6 @@ cc.Class({
                 const animationName = this.togglerName + '_' + 
                     (this._isOn?'on': 'off');
 
-                cc.log(this._animation);
-                cc.log(animationName);
-
                 this._animation && this._animation.play(animationName);
             };
 

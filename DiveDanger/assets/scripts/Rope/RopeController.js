@@ -15,6 +15,11 @@ cc.Class({
             type: cc.RigidBody
         },
 
+        submarineNode: {
+            default: null,
+            type: cc.Node
+        },
+
         _constuctor: {
             default: null,
             serializable: false
@@ -28,6 +33,11 @@ cc.Class({
         _isActiveRope: {
             default: false,
             serializable: false,
+        },
+
+        _initialOffset: {
+            default: cc.v2(),
+            serializable: false
         }
     },
 
@@ -38,6 +48,8 @@ cc.Class({
 
         this._constuctor = this.getComponentInChildren('RopeConstructor');
         this._character = this.connectionBody.getComponent('CharacterInWater');
+
+        this._initialOffset = this.node.position.clone();
     },
 
     onDisable() {
@@ -59,8 +71,24 @@ cc.Class({
 		}
     },
 
-    onRopeToggle(type, isOn) {
+    onRopeToggle(isOn, typeStr) {
+        const type = Number(typeStr);
+        //cc.log('rope toggle', isOn, typeStr);
         if (this.ropeType === type && isOn) {
+            const newWorldPosition = this.submarineNode.convertToWorldSpaceAR(this._initialOffset);
+            const newLocalPos = this.node.parent.convertToNodeSpaceAR(newWorldPosition);
+
+            //cc.log(this._initialOffset.x, this._initialOffset.y);
+            //cc.log('newLocalPos', newLocalPos.x, newLocalPos.y);
+
+            //const delta = newLocalPos.sub(this.node.position);
+            this.node.setPosition(newLocalPos);
+            /*this._constuctor._parts.forEach((part) => {
+                part.setPosition(cc.v2());
+            })*/
+
+            this._constuctor._ropeConstruct();
+
             this._character.node.setPosition(this.node.position);
             this._character.toggleActiveCharacter(true);
 
@@ -86,6 +114,8 @@ cc.Class({
             joint.apply();
 
             this._togglePhysics(false);
+
+            this._constuctor._destroyRope();
         }
     }
 });
