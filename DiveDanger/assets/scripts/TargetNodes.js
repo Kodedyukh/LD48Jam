@@ -13,7 +13,7 @@ cc.Class({
     onLoad () {
         this._targets = [];
         this.targetNodes.forEach(n => {
-            this._targets.push({ node: n, hp: 1 });
+            this._targets.push({ node: n, hp: 10 });
         });
         this._handleSubscription(true);
     },

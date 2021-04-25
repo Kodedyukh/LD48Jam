@@ -8,7 +8,8 @@
     "cargo_borders",
     "cooperation_area",
     "engines",
-    "bullet"
+    "enemy_bullet",
+    "enemy"
   ],
   "collision-matrix": [
     [
@@ -48,6 +49,15 @@
       true,
       false,
       true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
       false
     ]
   ],
