@@ -50,6 +50,10 @@ export default cc.Enum({
 
     //
     TOGGLE_PAUSE: 1301,
-    TIME_TO_WAVE: 1302,
-    LAST_WAVE_DESTROYED: 1303
+    TIME_TO_FINAL: 1302,
+    LAST_WAVE_DESTROYED: 1303,
+    PIN_PLAYER: 1304,
+    PIN_DIVER: 1305,
+    CURRENT_DEPTH: 1306
+
 });

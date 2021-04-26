@@ -20,7 +20,7 @@ cc.Class({
 
         _angle: { default: 0, serializable: false },
         _speed: { default: 1, serializable: false },
-        _radius: { default: 500, serializable: false },
+        _radius: { default: 900, serializable: false },
         _direction: { default: 1, serializable: false },
 
         _spinTimeout: { default: 0, serializable: false },
@@ -35,6 +35,9 @@ cc.Class({
         cc.log('enemy on enable');
         this._angle = this.startAngle;
         this._speed = this.startSpeed;
+        //this._radius = this.node.convertToWorldSpaceAR(cc.v2()).mag();
+
+        //cc.log(this._radius);
 
         cc.tween(this)
             .to(this.spinTimeout, { _radius: this.radius })
@@ -47,7 +50,7 @@ cc.Class({
     update (dt) {
         if (!this._isPaused) {
             if (this.centerNode) {
-                this._angle = (this._angle + .003 * this._speed * this._direction) % 360;
+                this._angle = (this._angle + .004 * this._speed * this._direction) % 360;
                 const centerPos = this.centerNode.parent.convertToWorldSpaceAR(this.centerNode);
 
                 const x = this._radius * Math.cos(this._angle);
@@ -78,12 +81,14 @@ cc.Class({
     },
 
     _updateDirection() {
+        cc.log('update direction called');
         if (Math.random() < this.spinChance) {
             this._direction *= -1;
         }
 
         const newRadius = Math.max(this.radius, this._radius + (Math.random() * 25 - 50));
-        const newSpeed = Math.min(Math.max(this.startSpeed / 2, this._speed * (Math.random() * 2)), this.startSpeed * 3);
+        const newSpeed = Math.min(Math.max(this.startSpeed / 2, this._speed * 
+            (Math.random() * 2)), this.startSpeed * 2);
 
         cc.tween(this)
             .to(this.spinTimeout / 2, { _radius: newRadius, _speed: newSpeed })

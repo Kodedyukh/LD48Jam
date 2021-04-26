@@ -204,6 +204,10 @@ cc.Class({
 			type: cc.Node
 		},
 
+		descendSpeed: {
+			default: 1
+		},
+
 		//public
 		oxygen: {
 			default: null,
@@ -244,6 +248,11 @@ cc.Class({
 
 		_isPaused: {
 			default: false,
+			serializable: false
+		},
+
+		_currentDepth: {
+			default: 0,
 			serializable: false
 		}
 	},
@@ -287,7 +296,7 @@ cc.Class({
 
 		// set engine conditions
 		Object.keys(EngineType).forEach((engType) => {
-			this._engineWork[engType] = true;
+			this._engineWork[EngineType[engType]] = true;
 		}, this);
 
 		this._handleSubscription(true);
@@ -319,6 +328,24 @@ cc.Class({
 			this.interactionAreas.forEach((area) => {
 				area && (area.angle = 0);
 			}, this);
+
+			let numOfLeftEngines = 0;
+			let numOfRightEngines = 0;
+
+			for (let engineType in this._engineWork) {
+				if (Number(engineType) < 4 && this._engineWork[engineType]) {
+					numOfLeftEngines ++;
+				} else if (Number(engineType) > 4 && this._engineWork[engineType]) {
+					numOfRightEngines ++;
+				}
+			}
+
+			this._currentDepth += (Math.min(numOfRightEngines, numOfLeftEngines) * 
+				this.descendSpeed) * dt;
+
+			cc.systemEvent.emit(GameEvent.CURRENT_DEPTH, this._currentDepth);
+
+
 		}
 		
 

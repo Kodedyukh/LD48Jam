@@ -166,7 +166,7 @@
     },
     "_enabled": true,
     "centerNode": null,
-    "radius": 650,
+    "radius": 520,
     "startSpeed": 1,
     "startAngle": 0,
     "spinTimeout": 5,
