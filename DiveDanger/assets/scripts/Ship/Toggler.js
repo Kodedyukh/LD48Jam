@@ -20,6 +20,10 @@ cc.Class({
             default: [],
             type: cc.String
         },
+
+        initiallyOn: {
+            default: true
+        },
         // public
 
         // private
@@ -31,6 +35,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onEnable() {
+        this._isOn = this.initiallyOn;
         this.scheduleOnce(() => {
             this.startInteractionCall = () => {
                 this._isOn = !this._isOn;
@@ -38,6 +43,8 @@ cc.Class({
 
                 const animationName = this.togglerName + '_' + 
                     (this._isOn?'on': 'off');
+
+                cc.log(animationName);
 
                 this._animation && this._animation.play(animationName);
             };

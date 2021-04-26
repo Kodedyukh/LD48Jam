@@ -5,7 +5,6 @@ cc.Class({
 
     properties: {
         centerNode: { default: null, type: cc.Node },
-        targetNodes: { default: [], type: cc.Node },
         radius: 300,
 
         startSpeed: 1,
@@ -31,7 +30,8 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onEnable () {
+        cc.log('enemy on enable');
         this._angle = this.startAngle;
         this._speed = this.startSpeed;
 
@@ -43,11 +43,11 @@ cc.Class({
 
     update (dt) {
         if (this.centerNode) {
-            this._angle = (this._angle + .0001 * this._speed * this._direction) % 360;
+            this._angle = (this._angle + .01 * this._speed * this._direction) % 360;
             const centerPos = this.centerNode.parent.convertToWorldSpaceAR(this.centerNode);
 
-            const x = this._radius * Math.cos(this._angle / Math.PI * 180);
-            const y = (this._radius * Math.sin(this._angle / Math.PI * 180)) / 1.5;
+            const x = this._radius * Math.cos(this._angle);
+            const y = this._radius * Math.sin(this._angle);
             this.node.setPosition(x, y);
 
             if (this._isTriggered) {
@@ -79,15 +79,18 @@ cc.Class({
     },
 
     _shoot() {
+        //cc.log('calling shoot')
         if (this._isAlive) {
             const startPos = this.node.convertToWorldSpaceAR(this.missileSpawner);
 
-            cc.systemEvent.emit(GameEvent.GET_TARGET_ENGINES, (targetNodes) => {
+            cc.systemEvent.emit(GameEvent.GET_TARGETS, (targetNodes) => {
                 if (targetNodes.length) {
+                    //cc.log('choosing node', targetNodes);
                     for (let target of targetNodes.sort(() => { return Math.random() > .5 ? 1 : -1 })) {
-                        const endPos = target.parent.convertToWorldSpaceAR(target);
-                        const results = cc.director.getPhysicsManager().rayCast(startPos, endPos, cc.RayCastType.All);
+                        const endPos = target.convertToWorldSpaceAR(cc.v2());
+                        const results = cc.director.getPhysicsManager().rayCast(startPos, endPos, cc.RayCastType.Closest);
 
+                        //cc.log('results', results);
                         if (results.length && results[0].collider.node === target) {
                             this._createMissile(endPos.sub(startPos));
                             break;
@@ -106,6 +109,7 @@ cc.Class({
     },
 
     _createMissile(velocity) {
+        //cc.log('create missile');
         const missile = cc.instantiate(this.missile);
         missile.parent = cc.director.getScene();
         missile.setPosition(this.node.convertToWorldSpaceAR(this.missileSpawner));

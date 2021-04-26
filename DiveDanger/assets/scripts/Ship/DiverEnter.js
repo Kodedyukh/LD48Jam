@@ -22,6 +22,7 @@ cc.Class({
 				if (!this._isDiverIn) {
 					cc.systemEvent.emit(GameEvent.DIVER_ENTER, true);
 					this._isDiverIn = true;
+					cc.log('diver in');
 				}
 
 			} break;
@@ -35,6 +36,7 @@ cc.Class({
 				if (this._isDiverIn) {
 					cc.systemEvent.emit(GameEvent.DIVER_ENTER, false);
 					this._isDiverIn = false;
+					cc.log('diver out');
 				}
 			} break;
 		}

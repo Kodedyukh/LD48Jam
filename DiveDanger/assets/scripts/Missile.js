@@ -15,16 +15,31 @@ cc.Class({
     },
 
     onBeginContact(contact, self, other) {
-        otherGroupName = other.node.group;
+        const otherGroupName = other.node.group;
+        const selfGroupName = self.node.group;
         switch(otherGroupName){
             case 'cargo_borders': {
-                cc.log('cargo damage');
-                this.node.destroy();
+                if (selfGroupName === 'enemy_bullet') {
+                    this.node.destroy();
+                }
+                
             } break;
-            case 'engines': {
-                cc.systemEvent.emit(GameEvent.ENGINE_DAMAGED, other.node);
-                this.node.destroy();
+            case 'engine': {
+                if (selfGroupName === 'enemy_bullet') {
+                    if (other.tag === 0) {
+                        this.node.destroy();
+                    }
+                }
+                
             } break;
+
+            case 'enemy':
+                cc.log('colision with enemy')
+                if (selfGroupName === 'player_bullet') {
+                    other.node.destroy();
+                    this.node.destroy();
+                    cc.systemEvent.emit(GameEvent.ENEMY_DESTROYED); 
+                }
         }
     }
 });

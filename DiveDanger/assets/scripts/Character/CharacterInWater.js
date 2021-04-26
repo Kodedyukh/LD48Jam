@@ -1,4 +1,5 @@
 import GameEvent from 'GameEvent';
+import EngineRepairArea from 'EngineRepairArea';
 
 cc.Class({
     extends: cc.Component,
@@ -7,6 +8,11 @@ cc.Class({
         velocity: {
             default: 10,
             type: cc.Integer
+        },
+
+        interactionMark: {
+            default: null,
+            type: cc.Node
         },
 
         _body: {
@@ -18,6 +24,11 @@ cc.Class({
             default: false,
             serializable: false,
             visible: false
+        },
+
+        _engineRepairArea: {
+            default: null,
+            serializable: false
         }
     },
 
@@ -36,6 +47,8 @@ cc.Class({
 
         cc.systemEvent[func](GameEvent.CHARACTER_MOVE_START, this.onCharacterMoveStart, this);
         cc.systemEvent[func](GameEvent.CHARACTER_MOVE_END, this.onCharacterMoveEnd, this);
+        cc.systemEvent[func](GameEvent.USE_BUTTON_PRESSED, this.onUseButtonPressed, this);
+        cc.systemEvent[func](GameEvent.USE_BUTTON_RELEASED, this.onUseButtonReleased, this);
     },
 
     toggleActiveCharacter(isOn) {
@@ -69,4 +82,56 @@ cc.Class({
         }
 
     },
+
+    onUseButtonPressed() {
+        if (this._engineRepairArea) {
+            this._engineRepairArea.startRepair();
+        }
+    },
+
+    onUseButtonReleased() {
+        if (this._engineRepairArea) {
+            this._engineRepairArea.stopRepair();
+        }
+    },
+
+    onBeginContact(contact, selfCollider, otherCollider) {
+        const otherGroupName = otherCollider.node.group;
+
+        switch (otherGroupName) {
+            case 'engine':
+
+                const repairArea = otherCollider.node.getComponent(EngineRepairArea);
+
+                if (repairArea && otherCollider.tag === 1) {
+                    this._engineRepairArea = repairArea;
+                    this.interactionMark.opacity = 255;
+                }
+
+                
+
+                break;
+
+        }
+    },
+
+    onEndContact(contact, selfCollider, otherCollider) {
+        const otherGroupName = otherCollider.node.group;
+
+        switch (otherGroupName) {
+            case 'engine':
+
+                const repairArea = otherCollider.node.getComponent(EngineRepairArea);
+
+                if (repairArea && this._engineRepairArea && otherCollider.tag === 1) {
+                    this._engineRepairArea.stopRepair();
+                    this._engineRepairArea = null;
+                    this.interactionMark.opacity = 0;
+                }
+
+                
+
+                break;
+        }
+    }
 });

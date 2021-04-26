@@ -7,12 +7,13 @@
     "player",
     "cargo_borders",
     "interaction_area",
-    "engines",
+    "engine",
     "enemy_bullet",
     "enemy",
     "rope_part",
     "rope_end",
-    "diver"
+    "diver",
+    "player_bullet"
   ],
   "collision-matrix": [
     [
@@ -58,7 +59,7 @@
       null,
       null,
       null,
-      false
+      true
     ],
     [
       false,
@@ -75,7 +76,11 @@
       false,
       false,
       false,
-      false
+      false,
+      null,
+      null,
+      null,
+      true
     ],
     [
       false,
@@ -103,8 +108,21 @@
       false,
       true,
       true,
+      true,
       false,
       false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
       false,
       false,
       false,

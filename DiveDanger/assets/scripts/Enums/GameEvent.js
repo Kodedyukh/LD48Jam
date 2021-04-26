@@ -31,12 +31,20 @@ export default cc.Enum({
 
     //Diver
     DIVER_ENTER: 400,
-    
+
+    //Turret
+    TURRET_ENTER: 500,
+
     // system parameters
     SHIELD_DESTROYED: 1001,
     OUT_OF_OXYGEN: 1002,
     OUT_OF_ARMS: 1003,
 
-    GET_TARGET_ENGINES: 1100,
-    ENGINE_DAMAGED: 1101
+    GET_TARGETS: 1100,
+    ENGINE_BROKEN: 1101,
+    ENGINE_FIXED: 1102,
+    ENGINES_STOP: 1103,
+
+    //enemy
+    ENEMY_DESTROYED: 1201
 });

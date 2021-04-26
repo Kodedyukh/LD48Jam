@@ -39,6 +39,7 @@ cc.Class({
 		cc.systemEvent[func](GameEvent.MOUSE_DOWN, this.onMouseDown, this);
 		cc.systemEvent[func](GameEvent.MOUSE_MOVE, this.onMouseMove, this);
 		cc.systemEvent[func](GameEvent.MOUSE_UP, this.onMouseUp, this);
+        cc.systemEvent[func](GameEvent.TURRET_ENTER, this.onTurretEnter, this);
 	},
 
     _getAngleFromPosition(worldPosition) {
@@ -73,16 +74,11 @@ cc.Class({
         const firePosition = muzzlePosition.sub(muzzleOffset);
 
         missile.setPosition(firePosition);
-        missile.getComponent(cc.RigidBody).linearVelocity = muzzleOffset.mul(-1);
+        missile.getComponent(cc.RigidBody).linearVelocity = muzzleOffset.mul(-5);
     },
 
     onMouseDown(worldPosition) {
-        if (this._isActive) {
-            this._isAiming = true;
-            this._muzzleAngle = this.muzzleNode.angle;
-
-            this._startAngle = this._getAngleFromPosition(worldPosition);
-        }
+        
     },
 
     onMouseMove(worldPosition) {
@@ -93,7 +89,24 @@ cc.Class({
     },
 
     onMouseUp() {
-        this._isAiming = false;
-        this._shoot();
+        if (this._isAiming) {
+            
+            this._shoot();
+        }
+    },
+
+    onTurretEnter(isOn) {
+        if (this._isActive) {
+
+            if (!this._isAiming && isOn) {
+                this._isAiming = true;
+                this._muzzleAngle = this.muzzleNode.angle;
+
+                this._startAngle = this.muzzleNode.angle;
+            } else if (this._isAiming && !isOn) {
+                this._isAiming = false;
+            }
+            
+        }
     }
 });

@@ -1,5 +1,9 @@
 {
-  "excludeScenes": [],
+  "excludeScenes": [
+    "dc271199-d4a1-4c11-ac5e-884ce2070dd5",
+    "f6f0bf14-ab62-4ef3-9c9d-e4a59768219c",
+    "2d2f792f-a40c-49bb-a189-ed176a246e49"
+  ],
   "orientation": {
     "landscapeLeft": true,
     "landscapeRight": true,
@@ -7,7 +11,7 @@
     "upsideDown": false
   },
   "packageName": "org.cocos2d.helloworld",
-  "startScene": "2d2f792f-a40c-49bb-a189-ed176a246e49",
+  "startScene": "794091b1-d784-4365-8437-50f6ea05e9d0",
   "title": "DiveDanger",
   "webOrientation": "auto",
   "inlineSpriteFrames": true,

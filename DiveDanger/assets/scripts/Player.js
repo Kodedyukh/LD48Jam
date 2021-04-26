@@ -89,6 +89,7 @@ cc.Class({
 		cc.systemEvent[func](GameEvent.USE_BUTTON_RELEASED, this.onUseButtonReleased, this);
 
 		cc.systemEvent[func](GameEvent.ROPE_TOGGLE, this.onRopeToggle, this);
+		cc.systemEvent[func](GameEvent.TURRET_ENTER, this.onTurretEnter, this);
 	},
 
 	onLeftButtonPressed() {
@@ -146,10 +147,39 @@ cc.Class({
 
 			this._isPinned = true;
 			cc.systemEvent.emit(GameEvent.PIN_PLAYER, true);
+			cc.systemEvent.emit(GameEvent.ENGINES_STOP);
+
+			cc.tween(this.node)
+				.to(0.3, {opacity: 0})
+				.start();
 		} else if (this._isPinned && !isOn) {
 			this._isPinned = false;
 			//cc.log('emitting uooin');
 			cc.systemEvent.emit(GameEvent.PIN_PLAYER, false);
+			cc.tween(this.node)
+				.to(0.3, {opacity: 255})
+				.start();
+		}
+	},
+
+	onTurretEnter(isOn) {
+		if (!this._isPinned && isOn) {
+			this.inputs.left = false;
+			this.inputs.right = false;
+			this.inputs.top = false;
+
+			this._isPinned = true;
+			cc.systemEvent.emit(GameEvent.PIN_PLAYER, true);
+			cc.tween(this.node)
+				.to(0.3, {opacity: 0})
+				.start();
+		} else if (this._isPinned && !isOn) {
+			this._isPinned = false;
+			//cc.log('emitting uooin');
+			cc.systemEvent.emit(GameEvent.PIN_PLAYER, false);
+			cc.tween(this.node)
+				.to(0.3, {opacity: 255})
+				.start();
 		}
 	},
 

@@ -3,6 +3,7 @@ import GameEvent from 'GameEvent';
 import EngineType from 'EngineType';
 import ProducerAnimator from 'ProducerAnimator';
 import RopeType from 'RopeType';
+import Engine from 'Engine';
 
 // helpers
 const SystemParam = cc.Class({
@@ -124,7 +125,7 @@ const ParameterProducer = cc.Class({
 			Math.random() + Math.random() + Math.random()) / 6, 0.5) * 
 			this.maxTimeToBreak;
 
-		cc.log('time to break', timeToBreak);
+		//cc.log('time to break', timeToBreak);
 
 		this.ship.postponeCall(() => {
 			this.break();
@@ -309,7 +310,7 @@ cc.Class({
 		this.rollAngle.update(dt);
 		this.node.angle = this.rollAngle.value;
 		this.interactionAreas.forEach((area) => {
-			area.angle = 0;
+			area && (area.angle = 0);
 		}, this);
 
 	},
@@ -342,6 +343,7 @@ cc.Class({
 		cc.systemEvent[func](GameEvent.SHIELD_DAMAGED, this.onShieldDamaged, this);
 		cc.systemEvent[func](GameEvent.SHOOT, this.onShoot, this);
 		cc.systemEvent[func](GameEvent.ENGINE_TOGGLE, this.onEngineToggle, this);
+		cc.systemEvent[func](GameEvent.GET_TARGETS, this.onGetTargets, this);
 	},
 
 	// callbacks
@@ -355,7 +357,7 @@ cc.Class({
 	},
 
 	onEngineToggle(isOn, engineTypeStr) {
-		cc.log('have engine toggle', isOn, engineTypeStr);
+		//cc.log('have engine toggle', isOn, engineTypeStr);
 		const engineType = Number(engineTypeStr);
 
 		if (this._engineWork[engineType] != isOn) {
@@ -369,7 +371,12 @@ cc.Class({
 				this.rollAngle[side] -= this.rollAngleSpeed;
 			}
 		}
-
-		
 	},
+
+	onGetTargets(callback) {
+		const engines = this.getComponentsInChildren(Engine);
+
+		typeof callback === 'function' && callback(engines.filter(t => !t.isBroken)
+			.map(t => t.node));
+	}
 });

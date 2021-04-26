@@ -24,7 +24,7 @@ cc.Class({
     // onLoad () {},
 
     onEnable() {
-        this._isOn = false;
+        this._isOn = this.initiallyOn;
         
         this.scheduleOnce(() => {
             this.startInteractionCall = () => {
@@ -64,10 +64,13 @@ cc.Class({
 
     // callbacks
     onConditionEvent(isOn) {
-        if (this.condition && !isOn) {
-            this.condition = false;
-        } else if (!this.condition && isOn) {
-            this.condition = true;
+
+        if (this._condition && !isOn) {
+            this._condition = false;
+            cc.log('condition false');
+        } else if (!this._condition && isOn) {
+            this._condition = true;
+            cc.log('condition true');
         }
     }
 });
