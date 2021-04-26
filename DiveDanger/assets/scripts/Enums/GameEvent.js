@@ -56,7 +56,7 @@ export default cc.Enum({
     LAST_WAVE_DESTROYED: 1305,
     PIN_PLAYER: 1306,
     PIN_DIVER: 1307,
-    CURRENT_DEPTH: 1308
+    CURRENT_DEPTH: 1308,
 
     //repair_bar
     TOGGLE_REPAIR_BAR: 1400,

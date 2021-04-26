@@ -26,7 +26,7 @@
         "__id__": 14
       },
       {
-        "__id__": 222
+        "__id__": 226
       }
     ],
     "_active": false,
@@ -6374,7 +6374,7 @@
     "armsProduction": 10,
     "shieldConsumption": 20,
     "shieldProduction": 0,
-    "rollAngleSpeed": 3,
+    "rollAngleSpeed": 0.3,
     "oxygenGeneratorNode": {
       "__id__": 24
     },
@@ -6437,6 +6437,7 @@
         "__id__": 154
       }
     ],
+    "descendSpeed": 1,
     "oxygen": null,
     "arms": null,
     "shield": null,
@@ -8816,6 +8817,18 @@
       },
       {
         "__id__": 221
+      },
+      {
+        "__id__": 222
+      },
+      {
+        "__id__": 223
+      },
+      {
+        "__id__": 224
+      },
+      {
+        "__id__": 225
       }
     ],
     "_currentNumberOfEnemies": 0,
@@ -8824,31 +8837,53 @@
     "_waitingNextWave": false,
     "_timeLeft": 0,
     "_currentDelay": 0,
+    "_currentDepth": 0,
+    "_waveQueue": [],
+    "_lastDepth": 1,
     "_isPaused": false,
     "_id": "84VXObvl5BY7GMZ7ccsy07"
   },
   {
     "__type__": "WaveStructure",
-    "delay": 10,
-    "spawnNumbers": [
-      1
-    ]
+    "depth": 10,
+    "spawnNumber": 1,
+    "inQueue": false
   },
   {
     "__type__": "WaveStructure",
-    "delay": 10,
-    "spawnNumbers": [
-      1,
-      2
-    ]
+    "depth": 20,
+    "spawnNumber": 2,
+    "inQueue": false
   },
   {
     "__type__": "WaveStructure",
-    "delay": 10,
-    "spawnNumbers": [
-      2,
-      2
-    ]
+    "depth": 30,
+    "spawnNumber": 2,
+    "inQueue": false
+  },
+  {
+    "__type__": "WaveStructure",
+    "depth": 40,
+    "spawnNumber": 3,
+    "inQueue": false
+  },
+  {
+    "__type__": "WaveStructure",
+    "depth": 60,
+    "spawnNumber": 4,
+    "inQueue": false
+  },
+  {
+    "__type__": "WaveStructure",
+    "depth": 70,
+    "spawnNumber": 6,
+    "inQueue": false
+  },
+  {
+    "__type__": "WaveStructure",
+    "depth": 90,
+    "spawnNumber": 7,
+    "inQueue": false
   },
   {
     "__type__": "cc.Node",
@@ -8859,10 +8894,10 @@
     },
     "_children": [
       {
-        "__id__": 223
+        "__id__": 227
       },
       {
-        "__id__": 225
+        "__id__": 229
       }
     ],
     "_active": true,
@@ -8920,13 +8955,13 @@
     "_name": "TutorialManager",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 222
+      "__id__": 226
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 224
+        "__id__": 228
       }
     ],
     "_prefab": null,
@@ -8982,7 +9017,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 223
+      "__id__": 227
     },
     "_enabled": true,
     "_id": "08F/fIcghN65eRk6+rCTDU"
@@ -8992,16 +9027,16 @@
     "_name": "WaveTimer",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 222
+      "__id__": 226
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 226
+        "__id__": 230
       },
       {
-        "__id__": 227
+        "__id__": 231
       }
     ],
     "_prefab": null,
@@ -9057,7 +9092,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 225
+      "__id__": 229
     },
     "_enabled": true,
     "_id": "2fgEPP6FRD9Ysg288u5bmG"
@@ -9067,7 +9102,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 225
+      "__id__": 229
     },
     "_enabled": true,
     "_materials": [
