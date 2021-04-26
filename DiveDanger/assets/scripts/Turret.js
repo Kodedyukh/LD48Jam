@@ -1,4 +1,5 @@
-import GameEvent from 'GameEvent'
+import GameEvent from 'GameEvent';
+import SoundName from 'SoundName';
 
 cc.Class({
     extends: cc.Component,
@@ -92,6 +93,7 @@ cc.Class({
         if (this._isAiming) {
             
             this._shoot();
+            cc.systemEvent.emit(GameEvent.SOUND_ACTIVE, SoundName.PlayerShot);
         }
     },
 

@@ -1,5 +1,5 @@
 import GameEvent from 'GameEvent';
-
+import SoundName from 'SoundName';
 import Toggler from 'Toggler';
 
 cc.Class({
@@ -38,6 +38,7 @@ cc.Class({
                         (this._isOn?'on': 'off');
 
                     this._animation && this._animation.play(animationName);
+                    cc.systemEvent.emit(GameEvent.SOUND_ACTIVE, SoundName.PlayerInWater);
                 }
                 
             };
