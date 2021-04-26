@@ -109,7 +109,7 @@ cc.Class({
         cc.systemEvent.off(GameEvent.USE_BUTTON_PRESSED, this.onRestartEvent, this);
         
         //Restart Code
-        cc.director.loadScene('Screens');
+        cc.director.loadScene('Main');
     }
 
 });

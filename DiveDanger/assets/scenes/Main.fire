@@ -10201,7 +10201,11 @@
       }
     ],
     "_active": true,
-    "_components": [],
+    "_components": [
+      {
+        "__id__": 337
+      }
+    ],
     "_prefab": null,
     "_opacity": 255,
     "_color": {
@@ -12759,5 +12763,27 @@
     },
     "fileId": "",
     "sync": false
+  },
+  {
+    "__type__": "77a6fOddrtM3rJcU+C1Xu92",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 266
+    },
+    "_enabled": true,
+    "startScreen": {
+      "__uuid__": "5b57337f-97be-4cb5-8acf-8761ec20903e"
+    },
+    "winnerScreen": {
+      "__uuid__": "233ecdc7-68a8-447f-bbcb-ef29d0a5e084"
+    },
+    "outOxyScreen": {
+      "__uuid__": "0680880f-62d3-4f56-b42e-8d95a287a11e"
+    },
+    "outShieldScreen": {
+      "__uuid__": "45360969-b746-42e4-be07-4dbb58183312"
+    },
+    "_id": "61HNzM1jJKMJgZv0Y3KHKu"
   }
 ]
