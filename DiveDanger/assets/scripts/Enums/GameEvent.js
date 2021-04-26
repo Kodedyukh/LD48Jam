@@ -35,6 +35,11 @@ export default cc.Enum({
     //Turret
     TURRET_ENTER: 500,
 
+    //Ui
+    OXY_CHANGE: 600,
+    ARMS_CHANGE: 601,
+    SHIELD_CHANGE: 602,
+
     // system parameters
     SHIELD_DESTROYED: 1001,
     OUT_OF_OXYGEN: 1002,
