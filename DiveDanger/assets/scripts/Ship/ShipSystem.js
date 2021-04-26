@@ -315,14 +315,17 @@ cc.Class({
 			if (!this.oxygen.update(dt)) {
 				cc.systemEvent.emit(GameEvent.OUT_OF_OXYGEN);
 			};
+			cc.systemEvent.emit(GameEvent.OXY_CHANGE, this.oxygen.value);
 
 			if (!this.arms.update(dt)) {
 				cc.systemEvent.emit(GameEvent.OUT_OF_ARMS);
 			}
+			cc.systemEvent.emit(GameEvent.ARMS_CHANGE, this.arms.value);
 
 			if (!this.shield.update(dt)) {
 				cc.systemEvent.emit(GameEvent.SHIELD_DESTROYED);
 			}
+			cc.systemEvent.emit(GameEvent.SHIELD_CHANGE, this.shield.value);
 
 
 			this.rollAngle.update(dt);
