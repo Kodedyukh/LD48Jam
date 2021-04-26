@@ -9,10 +9,19 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onEnable() {
+        this._body = this.getComponent(cc.RigidBody);
+    },
 
     start () {
 
+    },
+
+    update(dt) {
+        const angle = Math.atan2(this._body.linearVelocity.y,
+            this._body.linearVelocity.x);
+
+        this.node.angle = angle / Math.PI * 180 - 90;
     },
 
     onBeginContact(contact, self, other) {

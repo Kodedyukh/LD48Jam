@@ -91,7 +91,7 @@ const ParameterProducer = cc.Class({
 		},
 
 		maxTimeToBreak: {
-			default: 10
+			default: 80
 		},
 
 		producerAnimator: {
@@ -302,7 +302,6 @@ cc.Class({
 		}, this);
 
 		this._handleSubscription(true);
-
 	},
 
 	onDisable() {
@@ -432,6 +431,16 @@ cc.Class({
 			this._isPaused = true;
 		} else if (this._isPaused && !isOn) {
 			this._isPaused = false;
+		}
+	},
+
+	onBeginContact(contact, self, other) {
+		const otherGroupName = other.node.group;
+
+		switch (otherGroupName) {
+			case 'enemy_bullet':
+				cc.systemEvent.emit(GameEvent.SHIELD_DAMAGED);
+				break;
 		}
 	}
 });

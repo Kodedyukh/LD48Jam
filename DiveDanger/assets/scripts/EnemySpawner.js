@@ -147,15 +147,11 @@ cc.Class({
 	},
 
 	_lunchWave(wave) {
-
-		if (this._currentNumberOfEnemies === 0) {
-			for (let i = 0; i < wave.spawnNumber; i++) {
-				this.spawnEnemy();
-			}
-		} else {
-			this._waveQueue.push(wave);
-			wave.inQueue = true;
+		cc.log('launch wave called');
+		for (let i = 0; i < wave.spawnNumber; i++) {
+			this.spawnEnemy();
 		}
+		wave.inQueue = true;
 
 	},
 
@@ -172,7 +168,6 @@ cc.Class({
 		this._currentNumberOfEnemies --;
 
 		if (this._currentNumberOfEnemies === 0) {
-			this._currentAttackNumber ++;
 			this._launchWaveFirstInQueue();
 		}
 	},

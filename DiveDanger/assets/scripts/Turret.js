@@ -94,6 +94,7 @@ cc.Class({
             
             this._shoot();
             cc.systemEvent.emit(GameEvent.SOUND_ACTIVE, SoundName.PlayerShot);
+            cc.systemEvent.emit(GameEvent.SHOOT);
         }
     },
 
