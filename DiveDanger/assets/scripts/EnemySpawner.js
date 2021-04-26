@@ -147,7 +147,6 @@ cc.Class({
 	},
 
 	_lunchWave(wave) {
-		cc.log('launch wave called');
 		for (let i = 0; i < wave.spawnNumber; i++) {
 			this.spawnEnemy();
 		}
@@ -155,20 +154,16 @@ cc.Class({
 
 	},
 
-	_launchWaveFirstInQueue() {
-		if (this._waveQueue.length > 0) {
-			const wave = this._waveQueue.shift();
-
-			this._lunchWave(wave);
-		}
-		
-	},
-
 	onEnemyDestroyed() {
 		this._currentNumberOfEnemies --;
 
 		if (this._currentNumberOfEnemies === 0) {
-			this._launchWaveFirstInQueue();
+			const futureWaves = this.waves.filter(w => !w.inQueue);
+
+			if (futureWaves.length === 0) {
+				cc.log('last wave destroyed');
+				cc.systemEvent.emit(GameEvent.LAST_WAVE_DESTROYED);
+			}
 		}
 	},
 
