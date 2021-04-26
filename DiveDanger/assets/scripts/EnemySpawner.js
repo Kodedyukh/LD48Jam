@@ -7,13 +7,17 @@ const WaveStructure = cc.Class({
 
 	properties: {
 
-		delay: {
-			default: 1
+		depth: {
+			default: 0
 		},
 
-		spawnNumbers: {
-			default: [],
+		spawnNumber: {
+			default: 0,
 			type: cc.Integer
+		},
+
+		inQueue: {
+			default: false
 		}
 	}
 })
@@ -71,6 +75,21 @@ cc.Class({
 			serilizable: false
 		},
 
+		_currentDepth: {
+			default: 0,
+			serilizable: false
+		},
+
+		_waveQueue: {
+			default: [],
+			serilizable: false
+		},
+
+		_lastDepth: {
+			default: 1,
+			serilizable: false
+		},
+
 		_isPaused: {
 			default: false,
 			serilizable: false
@@ -79,26 +98,24 @@ cc.Class({
 
 	// LIFE-CYCLE CALLBACKS:
 	onEnable() {
-		this._currentDelay = this.waves[0].delay;
-		this._timeLeft = this._currentDelay;
-		this._waitingNextWave = true;
+
+		this._lastDepth = this.waves[this.waves.length - 1].depth;
 
 		this._handleSubscription(true);
 	},
 
 	update(dt) {
 		if (!this._isPaused) {
-			if (this._waitingNextWave) {
-				this._timeLeft -= dt;
+			const futureWaves = this.waves.filter(w => !w.inQueue);
 
-				if (this._timeLeft <= 0) {
-					this._launchAttack();
-					this._waitingNextWave = false;
-				} else {
-					cc.systemEvent.emit(GameEvent.TIME_TO_WAVE, 
-						this._timeLeft / this._currentDelay);
+			for (let i in futureWaves) {
+				if (futureWaves[i].depth < this._currentDepth) {
+					this._lunchWave(futureWaves[i]);
 				}
 			}
+
+			cc.systemEvent.emit(GameEvent.TIME_TO_FINAL, 
+				this._currentDepth / this._lastDepth);
 		}
 	},
 
@@ -112,6 +129,7 @@ cc.Class({
 
 		enemy.getComponent(Enemy).centerNode = this.centerNode;
 		enemy.getComponent(Enemy).startAngle = angle;
+		enemy.getComponent(Enemy)._radius = this.generationRadius;
 
 		enemy.parent = this.node;
 
@@ -125,32 +143,29 @@ cc.Class({
 
 		cc.systemEvent[func](GameEvent.ENEMY_DESTROYED, this.onEnemyDestroyed, this);
 		cc.systemEvent[func](GameEvent.TOGGLE_PAUSE, this.onTogglePause, this);
+		cc.systemEvent[func](GameEvent.CURRENT_DEPTH, this.onCurrentDepth, this);
 	},
 
-	_launchAttack() {
-		const wave = this.waves[this._currentWaveNumber];
+	_lunchWave(wave) {
 
-		if (this._currentAttackNumber < wave.spawnNumbers.length) {
-			const spawnNumber = wave.spawnNumbers[this._currentAttackNumber];
-
-			for (let i = 0; i < spawnNumber; i++) {
+		if (this._currentNumberOfEnemies === 0) {
+			for (let i = 0; i < wave.spawnNumber; i++) {
 				this.spawnEnemy();
 			}
 		} else {
-			this._currentAttackNumber = 0;
-			this._currentWaveNumber ++;
-
-			if (this._currentWaveNumber < this.waves.length) {
-				this._currentDelay = this.waves[this._currentWaveNumber].delay;
-				this._timeLeft = this._currentDelay;
-				this._waitingNextWave = true;
-			} else {
-				cc.systemEvent.emit(GameEvent.LAST_WAVE_DESTROYED);
-			}
-
-			
-
+			this._waveQueue.push(wave);
+			wave.inQueue = true;
 		}
+
+	},
+
+	_launchWaveFirstInQueue() {
+		if (this._waveQueue.length > 0) {
+			const wave = this._waveQueue.shift();
+
+			this._lunchWave(wave);
+		}
+		
 	},
 
 	onEnemyDestroyed() {
@@ -158,7 +173,7 @@ cc.Class({
 
 		if (this._currentNumberOfEnemies === 0) {
 			this._currentAttackNumber ++;
-			this._launchAttack();
+			this._launchWaveFirstInQueue();
 		}
 	},
 
@@ -168,5 +183,10 @@ cc.Class({
 		} else if (this._isPaused && !isOn) {
 			this._isPaused = false;
 		}
+	},
+
+	onCurrentDepth(depth) {
+		//cc.log(depth);
+		this._currentDepth = depth;
 	}
 });

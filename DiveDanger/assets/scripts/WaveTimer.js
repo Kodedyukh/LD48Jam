@@ -23,10 +23,10 @@ cc.Class({
     _handleSubscription(isOn) {
         const func = isOn? 'on': 'off';
 
-        cc.systemEvent[func](GameEvent.TIME_TO_WAVE, this.onTimeToWave, this);
+        cc.systemEvent[func](GameEvent.TIME_TO_FINAL, this.onTimeToFinal, this);
     },
 
-    onTimeToWave(timeParam) {
+    onTimeToFinal(timeParam) {
         this._sprite.fillRange = timeParam;
     }
 });

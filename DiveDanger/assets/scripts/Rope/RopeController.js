@@ -50,6 +50,8 @@ cc.Class({
         this._character = this.connectionBody.getComponent('CharacterInWater');
 
         this._initialOffset = this.node.position.clone();
+
+        cc.systemEvent.emit(GameEvent.PIN_DIVER, true);
     },
 
     onDisable() {
@@ -75,6 +77,8 @@ cc.Class({
         const type = Number(typeStr);
         //cc.log('rope toggle', isOn, typeStr);
         if (this.ropeType === type && isOn) {
+            cc.systemEvent.emit(GameEvent.PIN_DIVER, false);
+
             const newWorldPosition = this.submarineNode.convertToWorldSpaceAR(this._initialOffset);
             const newLocalPos = this.node.parent.convertToNodeSpaceAR(newWorldPosition);
 
@@ -104,6 +108,8 @@ cc.Class({
             cc.tween(this._character.node).to(0.5, {opacity: 255}).start();
 
         } else if (this.ropeType === type && !isOn){
+            cc.systemEvent.emit(GameEvent.PIN_DIVER, true);
+
             this._character.toggleActiveCharacter(false);
             cc.tween(this.node).to(0.5, {opacity: 0}).start();
             cc.tween(this._character.node).to(0.5, {opacity: 0}).start();
