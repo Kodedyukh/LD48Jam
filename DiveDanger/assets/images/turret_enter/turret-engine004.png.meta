@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "724ce20a-b8ce-4602-8a4d-9883945163eb",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 54,
+  "height": 62,
+  "platformSettings": {},
+  "subMetas": {
+    "turret-engine004": {
+      "ver": "1.0.4",
+      "uuid": "62b4fa19-f688-4268-bfe9-9f199d32aaac",
+      "rawTextureUuid": "724ce20a-b8ce-4602-8a4d-9883945163eb",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 54,
+      "height": 62,
+      "rawWidth": 54,
+      "rawHeight": 62,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

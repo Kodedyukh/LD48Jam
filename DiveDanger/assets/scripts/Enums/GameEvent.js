@@ -46,5 +46,10 @@ export default cc.Enum({
     ENGINES_STOP: 1103,
 
     //enemy
-    ENEMY_DESTROYED: 1201
+    ENEMY_DESTROYED: 1201,
+
+    //
+    TOGGLE_PAUSE: 1301,
+    TIME_TO_WAVE: 1302,
+    LAST_WAVE_DESTROYED: 1303
 });

@@ -240,6 +240,11 @@ cc.Class({
 		_engineWork: {
 			default: {},
 			serializable: false
+		},
+
+		_isPaused: {
+			default: false,
+			serializable: false
 		}
 	},
 
@@ -294,24 +299,28 @@ cc.Class({
 	},
 
 	update(dt) {
-		if (!this.oxygen.update(dt)) {
-			cc.systemEvent.emit(GameEvent.OUT_OF_OXYGEN);
-		};
 
-		if (!this.arms.update(dt)) {
-			cc.systemEvent.emit(GameEvent.OUT_OF_ARMS);
+		if (!this._isPaused) {
+			if (!this.oxygen.update(dt)) {
+				cc.systemEvent.emit(GameEvent.OUT_OF_OXYGEN);
+			};
+
+			if (!this.arms.update(dt)) {
+				cc.systemEvent.emit(GameEvent.OUT_OF_ARMS);
+			}
+
+			if (!this.shield.update(dt)) {
+				cc.systemEvent.emit(GameEvent.SHIELD_DESTROYED);
+			}
+
+
+			this.rollAngle.update(dt);
+			this.node.angle = this.rollAngle.value;
+			this.interactionAreas.forEach((area) => {
+				area && (area.angle = 0);
+			}, this);
 		}
-
-		if (!this.shield.update(dt)) {
-			cc.systemEvent.emit(GameEvent.SHIELD_DESTROYED);
-		}
-
-
-		this.rollAngle.update(dt);
-		this.node.angle = this.rollAngle.value;
-		this.interactionAreas.forEach((area) => {
-			area && (area.angle = 0);
-		}, this);
+		
 
 	},
 
@@ -344,6 +353,7 @@ cc.Class({
 		cc.systemEvent[func](GameEvent.SHOOT, this.onShoot, this);
 		cc.systemEvent[func](GameEvent.ENGINE_TOGGLE, this.onEngineToggle, this);
 		cc.systemEvent[func](GameEvent.GET_TARGETS, this.onGetTargets, this);
+		cc.systemEvent[func](GameEvent.TOGGLE_PAUSE, this.onTogglePause, this);
 	},
 
 	// callbacks
@@ -378,5 +388,13 @@ cc.Class({
 
 		typeof callback === 'function' && callback(engines.filter(t => !t.isBroken)
 			.map(t => t.node));
+	},
+
+	onTogglePause(isOn) {
+		if (!this._isPaused && isOn) {
+			this._isPaused = true;
+		} else if (this._isPaused && !isOn) {
+			this._isPaused = false;
+		}
 	}
 });

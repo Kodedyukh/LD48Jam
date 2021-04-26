@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "57b5e4d9-7416-484e-88d8-10ee9910f544",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 31,
+  "height": 29,
+  "platformSettings": {},
+  "subMetas": {
+    "tumblers002": {
+      "ver": "1.0.4",
+      "uuid": "a08f9f3c-e025-4650-b4df-69a22158f47a",
+      "rawTextureUuid": "57b5e4d9-7416-484e-88d8-10ee9910f544",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -0.5,
+      "trimX": 0,
+      "trimY": 1,
+      "width": 31,
+      "height": 28,
+      "rawWidth": 31,
+      "rawHeight": 29,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

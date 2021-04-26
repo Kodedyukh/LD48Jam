@@ -17,7 +17,7 @@ cc.Class({
 	properties: {
 		runVelocity: 100,
 		jumpVelocity: 100,
-        jumpCoolDown: 2,
+		jumpCoolDown: 2,
 		useDuration: 3,
 		interactionMark: {
 			default: null,
@@ -32,7 +32,8 @@ cc.Class({
 		_isJumping: { default: false, serializable: false },
 		_useDuration: { default: 0, serializable: false },
 		_isPinned: {default: false, serializable: false},
-		_jumpTimeout: { default: 0, serializable: false }
+		_jumpTimeout: { default: 0, serializable: false },
+		_isPaused: {default: false, serializable: false}
 	},
 
 	// LIFE-CYCLE CALLBACKS:
@@ -47,30 +48,23 @@ cc.Class({
 	},
 
 	update (dt) {
-		const velocity = cc.v2(0, this._body.linearVelocity.y);
-		if (this.inputs.left) velocity.x -= this.runVelocity;
-		if (this.inputs.right) velocity.x += this.runVelocity * (this._isJumping ? 1.5 : 1);
-		if (this.inputs.top && !this._isJumping && this._jumpTimeout >= this.jumpCoolDown) {
-			this._isJumping = true;
-            this._jumpTimeout = 0;
-			velocity.y += this.jumpVelocity;
-		}
-
-        if (this._jumpTimeout < this.jumpCoolDown) {
-            this._jumpTimeout += dt;
-        }
-
-		/*if (this.inputs.use) {
-			this._useDuration += dt;
-			if (this._useDuration > this.useDuration) {
-				this.inputs.use = false;
-			   
+		if (!this._isPaused) {
+			const velocity = cc.v2(0, this._body.linearVelocity.y);
+			if (this.inputs.left) velocity.x -= this.runVelocity;
+			if (this.inputs.right) velocity.x += this.runVelocity * (this._isJumping ? 1.5 : 1);
+			if (this.inputs.top && !this._isJumping && this._jumpTimeout >= this.jumpCoolDown) {
+				this._isJumping = true;
+				this._jumpTimeout = 0;
+				velocity.y += this.jumpVelocity;
 			}
-		} else {
-			this._useDuration = 0;
-		}*/
 
-		this._body.linearVelocity = velocity;
+			if (this._jumpTimeout < this.jumpCoolDown) {
+				this._jumpTimeout += dt;
+			}
+
+			this._body.linearVelocity = velocity;
+		}
+		
 	},
 
 	_handleSubscription(isOn) {
@@ -90,6 +84,8 @@ cc.Class({
 
 		cc.systemEvent[func](GameEvent.ROPE_TOGGLE, this.onRopeToggle, this);
 		cc.systemEvent[func](GameEvent.TURRET_ENTER, this.onTurretEnter, this);
+
+		cc.systemEvent[func](GameEvent.TOGGLE_PAUSE, this.onTogglePause, this);
 	},
 
 	onLeftButtonPressed() {
@@ -183,6 +179,17 @@ cc.Class({
 		}
 	},
 
+	onTogglePause(isOn) {
+		if (!this._isPaused && isOn) {
+			this._isPaused = true;
+			cc.systemEvent.emit(GameEvent.PIN_PLAYER, true);
+		} else if (this._isPaused && !isOn) {
+			this._isPaused = false;
+			cc.systemEvent.emit(GameEvent.PIN_PLAYER, false);
+		}
+	},
+
+
 	onBeginContact(contact, self, other) {
 		const otherGroupName = other.node.group;
 		switch(otherGroupName){
@@ -195,10 +202,10 @@ cc.Class({
 				if (self.tag === 1) {
 
 					//cc.log('enter interaction area');
-                    const interactionArea = other.node.getComponent(InteractionArea);
-                    if (interactionArea) {
-					    this._interactionAreas.push(interactionArea);
-                    }
+					const interactionArea = other.node.getComponent(InteractionArea);
+					if (interactionArea) {
+						this._interactionAreas.push(interactionArea);
+					}
 
 					if (this._interactionAreas.length) {
 						this.interactionMark.opacity = 255;
@@ -216,7 +223,7 @@ cc.Class({
 				if (self.tag === 1) {
 
 					cc.log('leave interaction area');
-                    const interactionArea = other.node.getComponent(InteractionArea);
+					const interactionArea = other.node.getComponent(InteractionArea);
 					if (interactionArea) {
 						interactionArea.stopInteraction();
 					}

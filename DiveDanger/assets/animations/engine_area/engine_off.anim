@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "left_engine_off",
+  "_name": "engine_off",
   "_objFlags": 0,
   "_native": "",
   "_duration": 0.3333333333333333,
@@ -16,9 +16,9 @@
               "frame": 0,
               "value": {
                 "__type__": "cc.Color",
-                "r": 71,
+                "r": 255,
                 "g": 255,
-                "b": 0,
+                "b": 255,
                 "a": 255
               }
             },

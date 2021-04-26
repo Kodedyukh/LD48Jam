@@ -26,6 +26,7 @@ cc.Class({
         _spinTimeout: { default: 0, serializable: false },
         _isAlive: { default: true, serializable: false },
         _isTriggered: { default: false, serializable: false },
+        _isPaused: {default: false, serializable: false}
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -39,25 +40,36 @@ cc.Class({
             .to(this.spinTimeout, { _radius: this.radius })
             .call(this._trigger.bind(this))
             .start();
+
+        this._handleSubscription(true);
     },
 
     update (dt) {
-        if (this.centerNode) {
-            this._angle = (this._angle + .01 * this._speed * this._direction) % 360;
-            const centerPos = this.centerNode.parent.convertToWorldSpaceAR(this.centerNode);
+        if (!this._isPaused) {
+            if (this.centerNode) {
+                this._angle = (this._angle + .003 * this._speed * this._direction) % 360;
+                const centerPos = this.centerNode.parent.convertToWorldSpaceAR(this.centerNode);
 
-            const x = this._radius * Math.cos(this._angle);
-            const y = this._radius * Math.sin(this._angle);
-            this.node.setPosition(x, y);
+                const x = this._radius * Math.cos(this._angle);
+                const y = this._radius * Math.sin(this._angle);
+                this.node.setPosition(x, y);
 
-            if (this._isTriggered) {
-                this._spinTimeout += dt;
-                if (this._spinTimeout > this.spinTimeout) {
-                    this._spinTimeout = 0;
-                    this._updateDirection();
+                if (this._isTriggered) {
+                    this._spinTimeout += dt;
+                    if (this._spinTimeout > this.spinTimeout) {
+                        this._spinTimeout = 0;
+                        this._updateDirection();
+                    }
                 }
             }
         }
+        
+    },
+
+    _handleSubscription(isOn) {
+        const func = isOn? 'on': 'off';
+
+        cc.systemEvent[func](GameEvent.TOGGLE_PAUSE, this.onTogglePause, this);
     },
 
     _trigger() {
@@ -114,5 +126,13 @@ cc.Class({
         missile.parent = cc.director.getScene();
         missile.setPosition(this.node.convertToWorldSpaceAR(this.missileSpawner));
         missile.getComponent(cc.RigidBody).linearVelocity = velocity;
+    },
+
+    onTogglePause(isOn) {
+        if (!this._isPaused && isOn) {
+            this._isPaused = true;
+        } else if (this._isPaused && !isOn) {
+            this._isPaused = false;
+        }
     }
 });

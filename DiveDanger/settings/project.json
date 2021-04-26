@@ -13,7 +13,8 @@
     "rope_part",
     "rope_end",
     "diver",
-    "player_bullet"
+    "player_bullet",
+    "ui"
   ],
   "collision-matrix": [
     [
@@ -123,6 +124,20 @@
       false,
       false,
       true,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
       false,
       false,
       false,
