@@ -67,5 +67,11 @@ export default cc.Enum({
     TOGGLE_REPAIR_BAR: 1400,
     UPDATE_REPAIR_BAR: 1401,
     //Sound
-    SOUND_ACTIVE: 1500
+    SOUND_ACTIVE: 1500,
+
+    //Screens
+    OUT_OXY_SCREEN: 1600,
+    OUT_SHIELD_SCREEN: 1601,
+    START_SCREEN: 1602,
+    WINNER_SCREEN: 1603,
 });
