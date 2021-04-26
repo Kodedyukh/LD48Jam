@@ -1,3 +1,4 @@
+import GameEvent from 'GameEvent';
 // helpers
 
 cc.Class({
@@ -67,11 +68,13 @@ cc.Class({
 	startRepair() {
 		cc.log('start repair');
 		this._isRepair = true;
+        cc.systemEvent.emit(GameEvent.TOGGLE_REPAIR_BAR, true);
 	},
 
 	stopRepair() {
 		cc.log('stop repair');
 		this._isRepair = false;
+        cc.systemEvent.emit(GameEvent.TOGGLE_REPAIR_BAR, false);
 	}
 
 	// private methods

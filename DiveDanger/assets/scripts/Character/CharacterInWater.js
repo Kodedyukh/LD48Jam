@@ -1,6 +1,11 @@
 import GameEvent from 'GameEvent';
 import EngineRepairArea from 'EngineRepairArea';
 
+const PlayerWaterAnimations = cc.Enum({
+	Swim: 'player_swim',
+	Repair: 'player_swim_repair'
+});
+
 cc.Class({
 	extends: cc.Component,
 
@@ -39,11 +44,22 @@ cc.Class({
 		_prePauseVelocity: {
 			default: cc.v2(),
 			serializable: false
-		}
+		},
+
+		_animation: {
+			default: null,
+			serializable: false
+		},
+		_currentAnimation: {
+			default: null,
+			serializable: false
+		},
 	},
 
 	onEnable() {
 		this._body = this.getComponent(cc.RigidBody);
+		this._animation = this.getComponent(cc.Animation);
+		this._currentAnimation = PlayerWaterAnimations.Swim;
 
 		this._handlerSubscribe(true);    
 	},
@@ -98,12 +114,20 @@ cc.Class({
 	onUseButtonPressed() {
 		if (this._engineRepairArea && !this._isPaused) {
 			this._engineRepairArea.startRepair();
+			if (this._currentAnimation !== PlayerWaterAnimations.Repair) {
+				this._currentAnimation = PlayerWaterAnimations.Repair;
+				this._animation.play(this._currentAnimation);
+			}
 		}
 	},
 
 	onUseButtonReleased() {
 		if (this._engineRepairArea && !this._isPaused) {
 			this._engineRepairArea.stopRepair();
+			if (this._currentAnimation !== PlayerWaterAnimations.Swim) {
+				this._currentAnimation = PlayerWaterAnimations.Swim;
+				this._animation.play(this._currentAnimation);
+			}
 		}
 	},
 
@@ -149,6 +173,11 @@ cc.Class({
 					this._engineRepairArea.stopRepair();
 					this._engineRepairArea = null;
 					this.interactionMark.opacity = 0;
+
+					if (this._currentAnimation !== PlayerWaterAnimations.Swim) {
+						this._currentAnimation = PlayerWaterAnimations.Swim;
+						this._animation.play(this._currentAnimation);
+					}
 				}
 
 				break;

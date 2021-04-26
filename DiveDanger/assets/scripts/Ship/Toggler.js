@@ -24,11 +24,31 @@ cc.Class({
         initiallyOn: {
             default: true
         },
+
+        render: {
+            default: null,
+            type: cc.Sprite
+        },
+
+        onFrame: {
+            default: null,
+            type: cc.SpriteFrame
+        },
+
+        offFrame: {
+            default: null,
+            type: cc.SpriteFrame
+        },
         // public
 
         // private
         _isOn: {
-            default: true
+            default: true,
+            notify(old) {
+                if (this.render) {
+                    this.render.spriteFrame = this._isOn ? this.onFrame : this.offFrame;
+                }
+            }
         }
     },
 

@@ -1,0 +1,47 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "player_repair",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.06666666666666667,
+  "sample": 60,
+  "speed": 0.25,
+  "wrapMode": 2,
+  "curveData": {
+    "paths": {
+      "Render": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": [
+              {
+                "frame": 0,
+                "value": {
+                  "__uuid__": "45265d69-9d7c-4001-8dc4-dab8d67c4008"
+                }
+              },
+              {
+                "frame": 0.016666666666666666,
+                "value": {
+                  "__uuid__": "c6ba3f06-92c4-4def-8719-9e44a215fc8e"
+                }
+              },
+              {
+                "frame": 0.03333333333333333,
+                "value": {
+                  "__uuid__": "d5482b89-2618-4869-83cf-57b76375f5f6"
+                }
+              },
+              {
+                "frame": 0.05,
+                "value": {
+                  "__uuid__": "a9748f85-66fd-445b-ac9b-a8d75e45bb2a"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "events": []
+}

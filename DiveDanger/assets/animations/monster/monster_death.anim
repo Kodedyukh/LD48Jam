@@ -1,0 +1,94 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "monster_death",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.15,
+  "sample": 60,
+  "speed": 0.25,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "090722e5-3304-4efc-9188-36527cd2c56f"
+            }
+          },
+          {
+            "frame": 0.016666666666666666,
+            "value": {
+              "__uuid__": "8e81f21b-3f9b-418b-a358-4bb5e7d2b338"
+            }
+          },
+          {
+            "frame": 0.03333333333333333,
+            "value": {
+              "__uuid__": "8a48c922-7c69-4b8b-8cce-96e52e780de9"
+            }
+          },
+          {
+            "frame": 0.05,
+            "value": {
+              "__uuid__": "b73ff465-7ad3-4175-8537-193a5e3ff618"
+            }
+          },
+          {
+            "frame": 0.06666666666666667,
+            "value": {
+              "__uuid__": "e3da9492-e3c8-41eb-b3c6-8a50768a7bc1"
+            }
+          },
+          {
+            "frame": 0.08333333333333333,
+            "value": {
+              "__uuid__": "6cf2bf3d-00f5-4e91-9690-bf65cb9e63bf"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "53d1bdcb-ecfb-4e6d-ac6c-5498d97818a5"
+            }
+          },
+          {
+            "frame": 0.11666666666666667,
+            "value": {
+              "__uuid__": "29c1b26e-97e6-4af6-b89a-d6192294c6dd"
+            }
+          }
+        ]
+      }
+    },
+    "props": {
+      "scale": [
+        {
+          "frame": 0,
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 1,
+            "y": 1
+          },
+          "curve": "constant"
+        },
+        {
+          "frame": 0.13333333333333333,
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 0,
+            "y": 0
+          }
+        }
+      ]
+    }
+  },
+  "events": [
+    {
+      "frame": 0.15,
+      "func": "suicide",
+      "params": []
+    }
+  ]
+}

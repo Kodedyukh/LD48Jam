@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "11f683cf-4895-4a11-a609-4931d4c7ef45",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 32,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "Daive-jump003": {
+      "ver": "1.0.4",
+      "uuid": "10c79d75-66c1-4ea9-8fac-abad4bd4467b",
+      "rawTextureUuid": "11f683cf-4895-4a11-a609-4931d4c7ef45",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -0.5,
+      "trimX": 0,
+      "trimY": 1,
+      "width": 32,
+      "height": 31,
+      "rawWidth": 32,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

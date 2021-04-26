@@ -1,4 +1,5 @@
 import GameEvent from 'GameEvent';
+import Enemy from 'Enemy';
 
 cc.Class({
     extends: cc.Component,
@@ -36,7 +37,7 @@ cc.Class({
             case 'enemy':
                 cc.log('colision with enemy')
                 if (selfGroupName === 'player_bullet') {
-                    other.node.destroy();
+                    other.node.getComponent(Enemy).dead();
                     this.node.destroy();
                     cc.systemEvent.emit(GameEvent.ENEMY_DESTROYED); 
                 }

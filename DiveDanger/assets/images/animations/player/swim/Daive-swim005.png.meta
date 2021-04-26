@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "80c1d10d-61bb-4953-93d4-4dc5b801bd58",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 32,
+  "height": 32,
+  "platformSettings": {},
+  "subMetas": {
+    "Daive-swim005": {
+      "ver": "1.0.4",
+      "uuid": "04cded1f-8c72-489d-8245-0012790e8cb4",
+      "rawTextureUuid": "80c1d10d-61bb-4953-93d4-4dc5b801bd58",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -0.5,
+      "offsetY": 0,
+      "trimX": 2,
+      "trimY": 0,
+      "width": 27,
+      "height": 32,
+      "rawWidth": 32,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

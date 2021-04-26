@@ -33,6 +33,18 @@
               }
             }
           ]
+        },
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": [
+              {
+                "frame": 0,
+                "value": {
+                  "__uuid__": "8ae0b411-7704-400a-855d-cdf551055b79"
+                }
+              }
+            ]
+          }
         }
       }
     }

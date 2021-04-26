@@ -4,6 +4,8 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        repairable: false, 
+        
         startInteractionCall: {
             default: null,
             visible: false

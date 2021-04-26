@@ -143,6 +143,8 @@ const ParameterProducer = cc.Class({
 		if (this._currentRepairTime >= this.totalRepairTime) {
 			this.fix();
 		}
+
+		cc.systemEvent.emit(GameEvent.UPDATE_REPAIR_BAR, this._currentRepairTime / this.totalRepairTime);
 	},
 
 	fix() {
@@ -379,6 +381,11 @@ cc.Class({
 				this.rollAngle[side] += this.rollAngleSpeed;	
 			} else {
 				this.rollAngle[side] -= this.rollAngleSpeed;
+			}
+
+			const engine = this.getComponentsInChildren(Engine).find(c => c.type === engineType);
+			if (engine) {
+				engine.switchEngine(isOn);
 			}
 		}
 	},

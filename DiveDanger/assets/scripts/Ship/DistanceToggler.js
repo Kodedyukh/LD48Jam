@@ -37,13 +37,6 @@ cc.Class({
                 if (!this._isBroken || this._isOn) {
                     this._isOn = !this._isOn;
                     cc.systemEvent.emit(this.toggleEvent, this._isOn, ...this.addArgs);
-
-                    const animationName = this.togglerName + '_' + 
-                        (this._isOn?'on': 'off');
-
-                    //cc.log(animationName);
-
-                    this._animation && this._animation.play(animationName);
                 }
                 
             };
@@ -89,12 +82,20 @@ cc.Class({
                 //cc.log('startting interaction')
                 this.startInteraction();
             }
+
+            const animationName = this.togglerName + '_' + 
+            (this._isBroken ? 'off': 'on');
+            this._animation && this._animation.play(animationName);
         }
     },
 
     onFixEvent(engineType) {
         if (this._isBroken && Number(this.addArgs[0]) === engineType) {
             this._isBroken = false;
+
+            const animationName = this.togglerName + '_' + 
+            (this._isBroken ? 'off': 'on');
+            this._animation && this._animation.play(animationName);
         }
     }
 

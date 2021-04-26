@@ -1,5 +1,10 @@
 import GameEvent from 'GameEvent';
 
+const EnemyAnimations = cc.Enum({
+    Idle: 'monster_idle',
+    Death: 'monster_death'
+});
+
 cc.Class({
     extends: cc.Component,
 
@@ -24,9 +29,14 @@ cc.Class({
         _direction: { default: 1, serializable: false },
 
         _spinTimeout: { default: 0, serializable: false },
-        _isAlive: { default: true, serializable: false },
+        _isAlive: { default: true, serializable: false, notify(old) {
+            if (!this._isAlive) {
+                this._animation.play(EnemyAnimations.Death);
+            }
+        } },
         _isTriggered: { default: false, serializable: false },
-        _isPaused: {default: false, serializable: false}
+        _isPaused: {default: false, serializable: false},
+        _animation: {default: null, serializable: false}
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -40,6 +50,8 @@ cc.Class({
             .to(this.spinTimeout, { _radius: this.radius })
             .call(this._trigger.bind(this))
             .start();
+
+        this._animation = this.getComponent(cc.Animation);
 
         this._handleSubscription(true);
     },
@@ -64,6 +76,16 @@ cc.Class({
             }
         }
         
+    },
+
+    dead() {
+        if (this._isAlive) {
+            this._isAlive = false;
+        }
+    },
+
+    suicide() {
+        this.node.destroy();
     },
 
     _handleSubscription(isOn) {

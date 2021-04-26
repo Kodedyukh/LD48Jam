@@ -9,6 +9,13 @@ const PlayerInputsHelper = cc.Class({
 		top: false,
 		use: false
 	},
+});
+
+const PlayerAnimations = cc.Enum({
+    Idle: 'player_idle',
+    Run: 'player_run',
+    Jump: 'player_jump',
+    Repair: 'player_repair'
 })
 
 cc.Class({
@@ -33,13 +40,17 @@ cc.Class({
 		_useDuration: { default: 0, serializable: false },
 		_isPinned: {default: false, serializable: false},
 		_jumpTimeout: { default: 0, serializable: false },
-		_isPaused: {default: false, serializable: false}
+		_isPaused: {default: false, serializable: false},
+
+		_animation: { default: null, serializable: false },
+        _currentAnimation: { default: null, serializable: false },
 	},
 
 	// LIFE-CYCLE CALLBACKS:
 
 	onLoad () {
 		this._body = this.getComponent(cc.RigidBody);
+		this._animation = this.getComponent(cc.Animation);
 		this._handleSubscription(true); 
 	},
 
@@ -63,6 +74,7 @@ cc.Class({
 			}
 
 			this._body.linearVelocity = velocity;
+            this._setAnimation();
 		}
 		
 	},
@@ -88,9 +100,33 @@ cc.Class({
 		cc.systemEvent[func](GameEvent.TOGGLE_PAUSE, this.onTogglePause, this);
 	},
 
+    _setAnimation() {
+        let animation = PlayerAnimations.Idle;
+
+        if (this._isJumping) {
+            animation = PlayerAnimations.Jump;
+        } else {
+            if (this.inputs.left) {
+                animation = PlayerAnimations.Run;
+                this.node.scaleX = -1;
+            } else if (this.inputs.right) {
+                animation = PlayerAnimations.Run;
+                this.node.scaleX = 1;
+            } else if (this.inputs.use && this._interactionAreas.length && this._interactionAreas[0].repairable) {
+                animation = PlayerAnimations.Repair;
+            }
+        }
+
+        if (this._currentAnimation !== animation) {
+            this._currentAnimation = animation;
+            this._animation.play(animation);
+        }
+    },
+
 	onLeftButtonPressed() {
 		if (!this._isPinned){
-			this.inputs.left = true;	
+			this.inputs.left = true;
+
 		}
 		
 	},

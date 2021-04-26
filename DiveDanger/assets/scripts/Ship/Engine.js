@@ -74,15 +74,29 @@ cc.Class({
                 this.isBroken = false;
                 cc.systemEvent.emit(GameEvent.ENGINE_FIXED, this.type);
             }
+
+            cc.systemEvent.emit(GameEvent.UPDATE_REPAIR_BAR, this.hp / 100);
         }
     },
 
     startRepair() {
         this._isRepair = true;
+        cc.systemEvent.emit(GameEvent.TOGGLE_REPAIR_BAR, true);
     },
 
     stopRepair() {
         this._isRepair = false;
+        cc.systemEvent.emit(GameEvent.TOGGLE_REPAIR_BAR, false);
+    },
+
+    switchEngine(isOn) {
+        if (!this.isBroken && this._animation) {
+            if (isOn) {
+                this._animation && this._animation.play('engine_is_running');
+            } else {
+                this._animation.pause();
+            }
+        }
     },
 
     _handleSubscription(isOn) {
