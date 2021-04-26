@@ -1,4 +1,5 @@
 import GameEvent from 'GameEvent';
+import SoundName from 'SoundName';
 
 const EnemyAnimations = cc.Enum({
     Idle: 'monster_idle',
@@ -132,6 +133,7 @@ cc.Class({
                         //cc.log('results', results);
                         if (results.length && results[0].collider.node === target) {
                             this._createMissile(endPos.sub(startPos));
+                            cc.systemEvent.emit(GameEvent.SOUND_ACTIVE, SoundName.EnemyShot);
                             break;
                         }
                     }
@@ -144,6 +146,7 @@ cc.Class({
             this.scheduleOnce(() => {
                 this._shoot();
             }, this.shootDelay);
+
         }
     },
 

@@ -66,5 +66,6 @@ export default cc.Enum({
     //repair_bar
     TOGGLE_REPAIR_BAR: 1400,
     UPDATE_REPAIR_BAR: 1401,
-
+    //Sound
+    SOUND_ACTIVE: 1500
 });

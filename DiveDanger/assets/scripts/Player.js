@@ -1,5 +1,6 @@
 import GameEvent from 'GameEvent';
 import InteractionArea from 'InteractionArea';
+import SoundName from 'SoundName';
 
 const PlayerInputsHelper = cc.Class({
 	name: 'PlayerInputsHelper',
@@ -67,6 +68,7 @@ cc.Class({
 				this._isJumping = true;
 				this._jumpTimeout = 0;
 				velocity.y += this.jumpVelocity;
+				cc.systemEvent.emit(GameEvent.SOUND_ACTIVE, SoundName.PlayerJump);
 			}
 
 			if (this._jumpTimeout < this.jumpCoolDown) {
