@@ -9,6 +9,7 @@ cc.Class({
         missile: { default: null, type: cc.Prefab },
 
         shootDelay: 1,
+        outOfAmmoLevel: 5,
 
         _angle: { default: 0, serializable: false },
         _isActive: { default: true, serializable: false },
@@ -16,6 +17,8 @@ cc.Class({
 
         _startAngle: { default: 0, serializable: false },
         _muzzleAngle: { default: 0, serializable: false },
+
+        _outOfAmmo: { default: false, serializable: false }
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -41,6 +44,7 @@ cc.Class({
 		cc.systemEvent[func](GameEvent.MOUSE_MOVE, this.onMouseMove, this);
 		cc.systemEvent[func](GameEvent.MOUSE_UP, this.onMouseUp, this);
         cc.systemEvent[func](GameEvent.TURRET_ENTER, this.onTurretEnter, this);
+        cc.systemEvent[func](GameEvent.ARMS_CHANGE, this.onArmsChange, this);
 	},
 
     _getAngleFromPosition(worldPosition) {
@@ -59,7 +63,7 @@ cc.Class({
     },
 
     _shoot() {
-        if (this._isActive) {
+        if (this._isActive && !this._outOfAmmo) {
             this._createMissile();
         }
     },
@@ -111,5 +115,9 @@ cc.Class({
             }
             
         }
+    }, 
+    
+    onArmsChange(value) {
+        this._outOfAmmo = (value <= this.outOfAmmoLevel);
     }
 });

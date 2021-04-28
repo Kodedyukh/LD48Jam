@@ -37,7 +37,7 @@ cc.Class({
 
 		_body: { default: null, serializable: false },
 		_interactionAreas: { default: [], serializable: false },
-		_isJumping: { default: false, serializable: false },
+		_isJumping: { default: false, serializable: false, notify() { cc.log(this._isJumping) } },
 		_useDuration: { default: 0, serializable: false },
 		_isPinned: {default: false, serializable: false},
 		_jumpTimeout: { default: 0, serializable: false },
@@ -65,8 +65,8 @@ cc.Class({
 			if (this.inputs.left) velocity.x -= this.runVelocity;
 			if (this.inputs.right) velocity.x += this.runVelocity * (this._isJumping ? 1.5 : 1);
 			if (this.inputs.top && !this._isJumping && this._jumpTimeout >= this.jumpCoolDown) {
+                cc.log('jump')
 				this._isJumping = true;
-				this._jumpTimeout = 0;
 				velocity.y += this.jumpVelocity;
 				cc.systemEvent.emit(GameEvent.SOUND_ACTIVE, SoundName.PlayerJump);
 			}
@@ -232,8 +232,11 @@ cc.Class({
 		const otherGroupName = other.node.group;
 		switch(otherGroupName){
 			case 'cargo_borders': {
-				if (contact.getManifold().points.length === 0)
+				if (self.tag === 2 && self.sensor) {
 					this._isJumping = false;
+                    this._jumpTimeout = 0;
+                    cc.log('land')
+                }
 			} break;
 			case 'interaction_area': {
 				//cc.log('begin contact with interaction area');

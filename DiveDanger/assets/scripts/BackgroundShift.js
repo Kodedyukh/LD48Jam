@@ -6,6 +6,9 @@ cc.Class({
     properties: {
         render: { default: null, type: cc.Node },
         shining: { default: null, type: cc.Node },
+        light: { default: null, type: cc.Node },
+        dark: { default: null, type: cc.Node },
+
         engineCount: 6,
         animations: { default: [], type: cc.Animation },
 
@@ -23,7 +26,13 @@ cc.Class({
             this.render.opacity += dt * this._currentSpeed * 2;
         }
         if (this.shining) {
-            this.shining.opacity += dt * this._currentSpeed / 20;
+            this.shining.opacity += dt * this._currentSpeed / 15;
+        }
+        if (this.light) {
+            this.light.opacity -= dt * this._currentSpeed / 20;
+        }
+        if (this.dark) {
+            this.dark.opacity += dt * this._currentSpeed;
         }
     },
 
@@ -37,7 +46,6 @@ cc.Class({
         this._currentSpeed += (1 / this.engineCount) * (isActive ? 1 : -1); 
         this.animations.forEach(a => {
             a.getAnimationState(a._clips[0].name).speed = this._currentSpeed;
-            cc.log(a.getAnimationState(a._clips[0].name).speed)
         });
     }
 });

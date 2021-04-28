@@ -26,7 +26,7 @@ cc.Class({
 
         _angle: { default: 0, serializable: false },
         _speed: { default: 1, serializable: false },
-        _radius: { default: 900, serializable: false },
+        _radius: { default: 1100, serializable: false },
         _direction: { default: 1, serializable: false },
 
         _spinTimeout: { default: 0, serializable: false },

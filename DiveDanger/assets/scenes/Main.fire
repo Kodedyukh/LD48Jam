@@ -993,7 +993,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 2800,
+      "width": 504,
       "height": 31
     },
     "_anchorPoint": {
@@ -1057,7 +1057,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 2800,
+      "width": 504,
       "height": 310
     },
     "_anchorPoint": {
@@ -1233,7 +1233,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 2800,
+      "width": 504,
       "height": 31
     },
     "_anchorPoint": {
@@ -1297,7 +1297,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 2800,
+      "width": 504,
       "height": 310
     },
     "_anchorPoint": {
@@ -1473,7 +1473,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 2800,
+      "width": 324,
       "height": 31
     },
     "_anchorPoint": {
@@ -1537,8 +1537,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 2800,
-      "height": 310
+      "width": 324,
+      "height": 155
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1550,7 +1550,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        -170.5,
+        -93,
         0,
         0,
         0,
@@ -1713,7 +1713,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 2800,
+      "width": 324,
       "height": 31
     },
     "_anchorPoint": {
@@ -1777,8 +1777,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 2800,
-      "height": 310
+      "width": 324,
+      "height": 155
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1790,7 +1790,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        -170.5,
+        -93,
         0,
         0,
         0,
@@ -2146,6 +2146,12 @@
     },
     "shining": {
       "__id__": 61
+    },
+    "light": {
+      "__id__": 57
+    },
+    "dark": {
+      "__id__": 54
     },
     "engineCount": 6,
     "animations": [
@@ -5797,6 +5803,7 @@
       "__uuid__": "1521fc0c-3084-4516-9333-2c1631192f46"
     },
     "shootDelay": 1,
+    "outOfAmmoLevel": 5,
     "_id": "082bO4tJBATotpAXqWD4Lf"
   },
   {
@@ -8549,7 +8556,7 @@
     "_enabled": true,
     "runVelocity": 200,
     "jumpVelocity": 400,
-    "jumpCoolDown": 0.5,
+    "jumpCoolDown": 0.15,
     "useDuration": 3,
     "interactionMark": {
       "__id__": 212

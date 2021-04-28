@@ -31,8 +31,10 @@ cc.Class({
             notify() {
                 if (this.isBroken) {
                     this._animation && this._animation.play('engine_broken');
-                    this._isActive = false;
-                    cc.systemEvent.emit(GameEvent.SWITCH_ENGINE, this._isActive);
+                    if (this._isActive) {
+                        this._isActive = false;
+                        cc.systemEvent.emit(GameEvent.SWITCH_ENGINE, this._isActive);
+                    }
                 } else {
                     this._animation && this._animation.play('engine_fixed');
                 }
