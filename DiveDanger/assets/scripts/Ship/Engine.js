@@ -31,6 +31,8 @@ cc.Class({
             notify() {
                 if (this.isBroken) {
                     this._animation && this._animation.play('engine_broken');
+                    this._isActive = false;
+                    cc.systemEvent.emit(GameEvent.SWITCH_ENGINE, this._isActive);
                 } else {
                     this._animation && this._animation.play('engine_fixed');
                 }
@@ -50,6 +52,11 @@ cc.Class({
 
         _animation: {
             default: null,
+            serializable: false
+        },
+
+        _isActive: {
+            default: true,
             serializable: false
         }
         
@@ -91,6 +98,9 @@ cc.Class({
 
     switchEngine(isOn) {
         if (!this.isBroken && this._animation) {
+            this._isActive = isOn;
+            cc.systemEvent.emit(GameEvent.SWITCH_ENGINE, this._isActive);
+
             if (isOn) {
                 this._animation && this._animation.play('engine_is_running');
             } else {

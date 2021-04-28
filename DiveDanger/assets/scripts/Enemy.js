@@ -43,7 +43,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onEnable () {
-        cc.log('enemy on enable');
+        cc.log('enemy on enable', this.radius);
         this._angle = this.startAngle;
         this._speed = this.startSpeed;
         //this._radius = this.node.convertToWorldSpaceAR(cc.v2()).mag();

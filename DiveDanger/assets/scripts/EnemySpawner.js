@@ -129,11 +129,11 @@ cc.Class({
 
 		enemy.getComponent(Enemy).centerNode = this.centerNode;
 		enemy.getComponent(Enemy).startAngle = angle;
-		enemy.getComponent(Enemy)._radius = this.generationRadius;
+		enemy.getComponent(Enemy).radius = this.generationRadius;
 
 		enemy.parent = this.node;
 
-		enemy.setPosition(xPos, yPos);
+		enemy.setPosition(-1000, 1000);//xPos, yPos);
 
 		this._currentNumberOfEnemies ++;
 	},

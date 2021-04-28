@@ -5,6 +5,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        explosionPrefab: { default: null, type: cc.Prefab }
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -24,12 +25,21 @@ cc.Class({
         this.node.angle = angle / Math.PI * 180 - 90;
     },
 
+    _createExposion() {
+        if (this.explosionPrefab) {
+            const explosion = cc.instantiate(this.explosionPrefab);
+            explosion.setPosition(this.node.parent.convertToWorldSpaceAR(this.node));
+            explosion.parent = cc.director.getScene();
+        }
+    },
+
     onBeginContact(contact, self, other) {
         const otherGroupName = other.node.group;
         const selfGroupName = self.node.group;
         switch(otherGroupName){
             case 'cargo_borders': {
                 if (selfGroupName === 'enemy_bullet') {
+                    this._createExposion();
                     this.node.destroy();
                 }
                 
@@ -37,6 +47,7 @@ cc.Class({
             case 'engine': {
                 if (selfGroupName === 'enemy_bullet') {
                     if (other.tag === 0) {
+                        this._createExposion();
                         this.node.destroy();
                     }
                 }

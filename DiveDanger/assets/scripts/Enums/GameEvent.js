@@ -49,6 +49,7 @@ export default cc.Enum({
     ENGINE_BROKEN: 1101,
     ENGINE_FIXED: 1102,
     ENGINES_STOP: 1103,
+    SWITCH_ENGINE: 1104,
 
     //enemy
     ENEMY_DESTROYED: 1201,
