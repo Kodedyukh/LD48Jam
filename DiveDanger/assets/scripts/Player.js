@@ -45,6 +45,8 @@ cc.Class({
 
 		_animation: { default: null, serializable: false },
         _currentAnimation: { default: null, serializable: false },
+
+		_isSleepingPlayer: { default: false, serializable: false}
 	},
 
 	// LIFE-CYCLE CALLBACKS:
@@ -159,17 +161,21 @@ cc.Class({
 	},
 
 	onUseButtonPressed() {
-		this.inputs.use = true;
+		if (!this._isSleepingPlayer){
+			this.inputs.use = true;
 
-		if (this._interactionAreas.length) {
-			this._interactionAreas[0].startInteraction();
+			if (this._interactionAreas.length) {
+				this._interactionAreas[0].startInteraction();
+			}
 		}
 	},
 	onUseButtonReleased() {
-		this.inputs.use = false;
+		if (!this._isSleepingPlayer){
+			this.inputs.use = false;
 
-		if (this._interactionAreas.length) {
-			this._interactionAreas[0].stopInteraction();
+			if (this._interactionAreas.length) {
+				this._interactionAreas[0].stopInteraction();
+			}
 		}
 	},
 
@@ -179,6 +185,7 @@ cc.Class({
 			this.inputs.right = false;
 			this.inputs.top = false;
 
+			this._isSleepingPlayer = true;
 			this._isPinned = true;
 			cc.systemEvent.emit(GameEvent.PIN_PLAYER, true);
 			cc.systemEvent.emit(GameEvent.ENGINES_STOP);
@@ -188,6 +195,7 @@ cc.Class({
 				.start();
 		} else if (this._isPinned && !isOn) {
 			this._isPinned = false;
+			this._isSleepingPlayer = false;
 			//cc.log('emitting uooin');
 			cc.systemEvent.emit(GameEvent.PIN_PLAYER, false);
 			cc.tween(this.node)
@@ -201,7 +209,7 @@ cc.Class({
 			this.inputs.left = false;
 			this.inputs.right = false;
 			this.inputs.top = false;
-
+			
 			this._isPinned = true;
 			cc.systemEvent.emit(GameEvent.PIN_PLAYER, true);
 			cc.tween(this.node)

@@ -29,7 +29,7 @@ cc.Class({
         this.scheduleOnce(() => {
             this.startInteractionCall = () => {
                 cc.log('calling');
-                if (this._condition) {
+                // if (this._condition) {
                     this._isOn = !this._isOn;
                     cc.log(...this.addArgs);
                     cc.systemEvent.emit(this.toggleEvent, this._isOn, ...this.addArgs);
@@ -39,7 +39,7 @@ cc.Class({
 
                     this._animation && this._animation.play(animationName);
                     cc.systemEvent.emit(GameEvent.SOUND_ACTIVE, SoundName.PlayerInWater);
-                }
+                // }
                 
             };
 
@@ -65,7 +65,6 @@ cc.Class({
 
     // callbacks
     onConditionEvent(isOn) {
-
         if (this._condition && !isOn) {
             this._condition = false;
             cc.log('condition false');
