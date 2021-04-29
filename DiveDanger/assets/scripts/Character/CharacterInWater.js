@@ -1,5 +1,6 @@
 import GameEvent from 'GameEvent';
 import EngineRepairArea from 'EngineRepairArea';
+import InteractionArea from 'InteractionArea';
 
 const PlayerWaterAnimations = cc.Enum({
 	Swim: 'player_swim',
@@ -36,6 +37,11 @@ cc.Class({
 			serializable: false
 		},
 
+		_interactionAreaArea: {
+			default: null,
+			serializable: false
+		},
+
 		_isPaused: {
 			default: false,
 			serializable: false
@@ -50,6 +56,7 @@ cc.Class({
 			default: null,
 			serializable: false
 		},
+
 		_currentAnimation: {
 			default: null,
 			serializable: false
@@ -80,8 +87,12 @@ cc.Class({
 	},
 
 	toggleActiveCharacter(isOn) {
-		this._isActiveCharacter = isOn;
-		this._body.linearVelocity = cc.v2(0, 0);
+		this.scheduleOnce(()=>{
+			this._isActiveCharacter = isOn;
+			this._body.linearVelocity = cc.v2(0, 0);
+			cc.log('toggle start');
+		})
+
 	},
 
 	onCharacterMoveStart(direction) {
@@ -113,11 +124,14 @@ cc.Class({
 
 	onUseButtonPressed() {
 		if (this._engineRepairArea && !this._isPaused) {
+			cc.log('characterInWater')
 			this._engineRepairArea.startRepair();
 			if (this._currentAnimation !== PlayerWaterAnimations.Repair) {
 				this._currentAnimation = PlayerWaterAnimations.Repair;
 				this._animation.play(this._currentAnimation);
 			}
+		} else if (this._interactionAreaArea && this._isActiveCharacter) {
+			this._interactionAreaArea.startInteraction();
 		}
 	},
 
@@ -158,6 +172,14 @@ cc.Class({
 				}
 				break;
 
+			case 'interaction_area':
+
+				const interactionArea = otherCollider.node.getComponent(InteractionArea);
+
+				if (interactionArea) {
+					this._interactionAreaArea = interactionArea;
+				}
+				break;
 		}
 	},
 
@@ -180,6 +202,15 @@ cc.Class({
 					}
 				}
 
+				break;
+
+			case 'interaction_area':
+
+				const interactionArea = otherCollider.node.getComponent(InteractionArea);
+
+				if (interactionArea && this._interactionAreaArea) {
+					this._interactionAreaArea = null;
+				}
 				break;
 		}
 	}
